@@ -103,6 +103,45 @@ class RepresentantesController extends Controller
         }
     }
 
+    public function actionCreateModal()
+    {
+        $model = new TblRepresentantes();
+
+        if ($model->load($this->request->post())) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $model->cod_representante = $this->CreateCode();
+                $model->fecha_ing = date('Y-m-d H:i:s');
+                $model->fecha_mod = date('Y-m-d H:i:s');
+                $model->user_ing = \Yii::$app->user->identity->id;
+                $model->user_mod = \Yii::$app->user->identity->id;
+
+                /*if (!$model->save()) {
+                    throw new Exception(implode("<br />", \yii\helpers\ArrayHelper::getColumn($model->getErrors(), 0, false)));
+                }
+                $transaction->commit();*/
+
+                if ($model->save()) {
+                    $transaction->commit();
+                    return 1;
+                } else {
+                    throw new Exception(implode("<br />", \yii\helpers\ArrayHelper::getColumn($model->getErrors(), 0, false)));
+                }
+            } catch (Exception $e) {
+                $transaction->rollBack();
+                $controller = Yii::$app->controller->id . "/" . Yii::$app->controller->action->id;
+                CoreController::getErrorLog(\Yii::$app->user->identity->id, $e, $controller);
+                return $this->redirect(['index']);
+            }
+            Yii::$app->session->setFlash('success', "Registro creado exitosamente.");
+            return $this->redirect(['index']);
+        } else {
+            return $this->renderAjax('_modal_form', [
+                'model' => $model,
+            ]);
+        }
+    }
+
     function CreateCode()
     {
         $representante = TblRepresentantes::find()->orderBy(['id_representante' => SORT_DESC])->one();

@@ -7,6 +7,8 @@ use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use kartik\export\ExportMenu;
+use yii\bootstrap4\Modal;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\OsigSearch */
@@ -15,6 +17,23 @@ use kartik\export\ExportMenu;
 $this->title = 'Listado de Reprentantes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<?php
+//FIXME CREAR MODAL
+
+Modal::begin([
+    'options' => [
+        'tabindex' => false
+    ],
+    'title' => 'Crear registro',
+    'id' => 'create-modal',
+    'size' => 'modal-lg'
+]);
+echo "<div id='createModalContent'></div>";
+Modal::end();
+?>
+
+<?php Pjax::begin(['id' => 'datosGrid']); ?>
 <div class="row">
     <!-- left column -->
     <div class="col-md-12">
@@ -52,9 +71,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'hAlign' => 'center',
                     'attribute' => 'cod_representante',
                 ],
-
-                // TODO: agregar funcionabilidad de busqueda por Nombre Completo
-
                 [
                     'class' => 'kartik\grid\DataColumn',
                     'attribute' => 'nombreCompleto',
@@ -120,7 +136,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
 
             echo GridView::widget([
-                'id' => 'kv-especies',
+                'id' => 'datosGrid',
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => $gridColumns,
@@ -132,6 +148,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'toolbar' =>  [
                     [
                         'content' =>
+                        Html::button('<i class="fa fa-plus"></i> Modal', ['value' => Url::to('index.php?r=pacientes/representantes/create-modal'), 
+                        'class' => 'btn btn-warning', 'id' => 'modalButton'
+                        ]) .' &nbsp&nbsp '.
                         Html::a('<i class="fas fa-plus"></i> Agregar', ['create'], [
                             'class' => 'btn btn-success',
                             'data-pjax' => 0,
@@ -144,7 +163,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     '{toggleData}',
                     $exportmenu,
-
                 ],
                 'toggleDataContainer' => ['class' => 'btn-group mr-2'],
                 // set export properties
@@ -165,3 +183,4 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php Pjax::end(); ?>
