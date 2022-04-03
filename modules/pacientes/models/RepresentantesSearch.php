@@ -11,6 +11,9 @@ use app\models\TblRepresentantes;
  */
 class RepresentantesSearch extends TblRepresentantes
 {
+    
+    public $nombreCompleto;
+
     /**
      * {@inheritdoc}
      */
@@ -18,7 +21,7 @@ class RepresentantesSearch extends TblRepresentantes
     {
         return [
             [['id_representante', 'id_departamento', 'id_municipio', 'user_ing', 'user_mod', 'activo'], 'integer'],
-            [['cod_representante', 'nombre', 'apellido', 'direccion', 'dui', 'telefono', 'correo_electronico', 'fecha_ing', 'fecha_mod'], 'safe'],
+            [['cod_representante', 'nombre', 'apellido', 'direccion', 'dui', 'telefono', 'correo_electronico', 'fecha_ing', 'fecha_mod', 'nombreCompleto'], 'safe'],
         ];
     }
 
@@ -56,6 +59,14 @@ class RepresentantesSearch extends TblRepresentantes
             return $dataProvider;
         }
 
+        //FIX: Sorting para campo Nombre Completo 
+        $dataProvider->sort->attributes['nombreCompleto'] = [
+            'asc' => ['nombre' => SORT_ASC, 'apellido' => SORT_ASC],
+            'desc' => ['nombre' => SORT_DESC, 'apellido' => SORT_DESC],
+            'label' => 'nombreCompleto',
+            'default' => SORT_ASC,
+        ];
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id_representante' => $this->id_representante,
@@ -75,6 +86,17 @@ class RepresentantesSearch extends TblRepresentantes
             ->andFilterWhere(['like', 'dui', $this->dui])
             ->andFilterWhere(['like', 'telefono', $this->telefono])
             ->andFilterWhere(['like', 'correo_electronico', $this->correo_electronico]);
+
+        //FIX: Filtros para campo NombreCompleto 
+
+        $query->andFilterWhere(
+            [
+                'or',
+                ['like', 'nombre', $this->nombreCompleto],
+                ['like', 'apellido', $this->nombreCompleto],
+                ['like', 'CONCAT_WS(" ",`nombre`, `apellido`)', $this->nombreCompleto],
+            ]
+        );
 
         return $dataProvider;
     }

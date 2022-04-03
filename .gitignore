@@ -13,7 +13,7 @@ web/avatars/
 web/images/
 widgets/
 .gitattributes
-.bowerrrc
+.bowerrc
 codeception.yml
 composer.json
 composer.lock

@@ -38,6 +38,11 @@ class TblRepresentantes extends \yii\db\ActiveRecord
         return 'tbl_representantes';
     }
 
+    //FIX: Getter para nombre completo de representante
+    public function getNombreCompleto(){
+        return $this->nombre . ' ' . $this->apellido;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -74,12 +79,13 @@ class TblRepresentantes extends \yii\db\ActiveRecord
             'id_municipio' => 'Municipio',
             'dui' => 'Dui',
             'telefono' => 'Telefono',
-            'correo_electronico' => 'Correo Electronico',
+            'correo_electronico' => 'Correo',
             'user_ing' => 'User Ing',
             'fecha_ing' => 'Fecha Ing',
             'user_mod' => 'User Mod',
             'fecha_mod' => 'Fecha Mod',
             'activo' => 'Activo',
+            'nombreCompleto' => 'Representante',
         ];
     }
 
