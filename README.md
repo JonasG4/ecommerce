@@ -5,7 +5,7 @@
     <h1 align="center">Yii 2 Veterinaria UNIVO</h1>
    <br>
     <a href="https://univo.edu.sv" target="_blank">
-        <img src="https://www.univo.edu.sv/wp-content/uploads/2019/09/lo2.png" height="100px">
+        <img src="https://www.univo.edu.sv/wp-content/uploads/2019/09/lo2.png">
     </a>
 </p>
 
