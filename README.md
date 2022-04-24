@@ -2,9 +2,14 @@
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
     </a>
-    <h1 align="center">Yii 2 Basic Project Template</h1>
-    <br>
+    <h1 align="center">Yii 2 Veterinaria UNIVO</h1>
+   <br>
+    <a href="https://univo.edu.sv" target="_blank">
+        <img src="https://www.univo.edu.sv/wp-content/uploads/2019/09/lo2.png" height="100px">
+    </a>
 </p>
+
+Proyecto creado en Yii2 con fines educativo para estudiantes de la materia Aplicacion de Frameworks Empresariales. Ciclo 2 / 2022 de la Universidad de Oriente UNIVO
 
 Yii 2 Basic Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
 rapidly creating small projects.
@@ -17,8 +22,7 @@ features to your application.
 [![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-basic.svg)](https://packagist.org/packages/yiisoft/yii2-app-basic)
 [![build](https://github.com/yiisoft/yii2-app-basic/workflows/build/badge.svg)](https://github.com/yiisoft/yii2-app-basic/actions?query=workflow%3Abuild)
 
-DIRECTORY STRUCTURE
--------------------
+## DIRECTORY STRUCTURE
 
       assets/             contains assets definition
       commands/           contains console commands (controllers)
@@ -32,9 +36,6 @@ DIRECTORY STRUCTURE
       views/              contains view files for the Web application
       web/                contains the entry script and Web resources
 
-
-
-REQUIREMENTS
-------------
+## REQUIREMENTS
 
 The minimum requirement by this project template that your Web server supports PHP 5.6.0.
