@@ -2,16 +2,16 @@
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
     </a>
-</p>    
-    <h1 align="center">Yii 2 Veterinaria UNIVO</h1>
-   <br>
-   <p align="center">
+</p>
+<p align="center">
     <a href="https://univo.edu.sv" target="_blank">
         <img src="https://www.univo.edu.sv/wp-content/uploads/2019/09/lo2.png">
     </a>
-</p>
+</p>    
+    <h1 align="center">Yii 2 Veterinaria UNIVO</h1>
+   <br>
 
-Proyecto creado en Yii2 con fines educativo para estudiantes de la materia Aplicacion de Frameworks Empresariales. Ciclo 2 / 2022 de la Universidad de Oriente UNIVO
+Proyecto creado en Yii2 con fines educativos para estudiantes de la materia Aplicacion de Frameworks Empresariales. Ciclo 02-2022 de la Universidad de Oriente UNIVO
 
 Yii 2 Basic Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
 rapidly creating small projects.
