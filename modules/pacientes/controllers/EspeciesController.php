@@ -6,6 +6,7 @@ use app\models\TblEspecies;
 use app\modules\pacientes\models\EspeciesSearch;
 use app\modules\pacientes\models\RazasSearch;
 use app\controllers\CoreController;
+use app\models\TblRazas;
 use Exception;
 use Yii;
 use yii\web\Controller;
@@ -137,8 +138,57 @@ class EspeciesController extends Controller
      */
     public function actionDelete($id_especie)
     {
-        $this->findModel($id_especie)->delete();
+        //$this->findModel($id_especie)->delete();
 
+        $model = $this->findModel($id_especie);
+        $model->visible = 0;
+        $model->save();
+        return $this->redirect(['index']);
+    }
+
+    public function actionDeleteExiste($id_especie)
+    {
+        $existe = TblRazas::find()->where(['id_especie' => $id_especie])->exists(); //bool
+
+        if ($existe) {
+            Yii::$app->getSession()->setFlash('warning', 'Existe por lo menos una solicitud ligada a este registo por lo que no podrá eliminarla');
+        } else {
+            $this->findModel($id_especie)->delete();
+            Yii::$app->getSession()->setFlash('success', 'Se ha borrando el registro de manera permanente con éxito');
+        }
+        return $this->redirect(['index']);
+    }
+
+    public function actionDeleteForEach($id_especie)
+    {
+        $cascada = TblRazas::find()->where(['id_especie' => $id_especie])->all();
+        foreach ($cascada as $razas) {
+            $razas->delete();
+        }
+
+        if ($razas) {
+            $this->findModel($id_especie)->delete();
+            Yii::$app->getSession()->setFlash('success', 'Se ha borrando los registros relacionados de manera permanente con éxito');
+        } else {
+            Yii::$app->getSession()->setFlash('warning', 'Error al eliminar los registros relacionados');
+        }
+        return $this->redirect(['index']);
+    }
+
+    public function actionDeleteCascada($id_especie)
+    {
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            TblRazas::deleteAll(['id_especie' => $id_especie]);
+            $this->findModel($id_especie)->delete();
+            $transaction->commit();
+        } catch (Exception $e) {
+            $transaction->rollBack();
+            $controller = Yii::$app->controller->id . "/" . Yii::$app->controller->action->id;
+            CoreController::getErrorLog(\Yii::$app->user->identity->id, $e, $controller);
+            return $this->redirect(['index']);
+        }
+        Yii::$app->session->setFlash('success', "Registro eliminado exitosamente.");
         return $this->redirect(['index']);
     }
 

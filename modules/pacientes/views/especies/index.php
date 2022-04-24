@@ -118,11 +118,29 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'vAlign' => 'middle',
                 ],
-                [
+                /*[
                     'class' => 'kartik\grid\ActionColumn',
                     'urlCreator' => function ($action, TblEspecies $model, $key, $index, $column) {
                         return Url::toRoute([$action, 'id_especie' => $model->id_especie]);
                     }
+                ],*/
+                [
+                    'class' => 'kartik\grid\ActionColumn',
+                    'template' => '{view} {update} {delete}',
+                    'urlCreator' => function ($action, TblEspecies $model, $key, $index, $column) {
+                        return Url::toRoute([$action, 'id_especie' => $model->id_especie]);
+                    },
+                    'buttons' => [
+                        'delete' => function($url, $model){
+                            return Html::a('<span class="fas fa-trash-alt"></span>', ['delete', 'id_especie' => $model->id_especie], [
+                                'class' => '',
+                                'data' => [
+                                    'confirm' => 'Se eliminaran todos los datos relacionados con este registro. Desea continuar?',
+                                    'method' => 'post',
+                                ],
+                            ]);
+                        }
+                    ],
                 ],
             ];
 
@@ -174,7 +192,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'showPageSummary'=>$pageSummary,
                 'panel' => [
                     'type' => GridView::TYPE_PRIMARY,
-                    'heading' => 'especies',
+                    'heading' => 'Especies',
                 ],
                 'persistResize' => false,
             ]);

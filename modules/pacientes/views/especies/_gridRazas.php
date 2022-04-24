@@ -84,7 +84,7 @@ use kartik\export\ExportMenu;
             ]);
 
             echo GridView::widget([
-                'id' => 'kv-especies',
+                'id' => 'kv-razas',
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => $gridColumns,

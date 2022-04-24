@@ -146,8 +146,11 @@ class RazasController extends Controller
      */
     public function actionDelete($id_raza)
     {
-        $this->findModel($id_raza)->delete();
+        //$this->findModel($id_raza)->delete();
 
+        $model = $this->findModel($id_raza);
+        $model->visible = 0;
+        $model->save();
         return $this->redirect(['index']);
     }
 

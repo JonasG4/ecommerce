@@ -46,8 +46,8 @@ use yii\helpers\Url;
                 </li>
                 <!------- END DASHBOARD ------->
 
-                <!------- MENU CLIENTES ------->
-                <?php if (Yii::$app->controller->id == 'especies' || Yii::$app->controller->id == 'razas' || Yii::$app->controller->id == 'representantes') {
+                <!------- MENU PACIENTES ------->
+                <?php if (Yii::$app->controller->id == 'especies' || Yii::$app->controller->id == 'razas' || Yii::$app->controller->id == 'representantes' || Yii::$app->controller->id == 'pacientes') {
                     $li = "nav-item has-treeview active menu-open";
                     $a = "nav-link active";
                 } else {
@@ -59,7 +59,7 @@ use yii\helpers\Url;
                     </a>
                     <ul class="nav nav-treeview">
                         <!-------------------------------------------------->
-                        <?php if (Yii::$app->controller->id == 'especies' && in_array(\Yii::$app->controller->action->id, ['index', 'create', 'update']) ) {
+                        <?php if (Yii::$app->controller->id == 'especies' && in_array(\Yii::$app->controller->action->id, ['index', 'create', 'update'])) {
                             $li = "nav-item active";
                             $a = "nav-link active";
                         } else {
@@ -93,6 +93,18 @@ use yii\helpers\Url;
                         ?>
                         <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/pacientes/representantes/index']); ?>"><i class="nav-icon far fa-circle text-green"></i>
                                 <p>Representantes</p>
+                            </a></li>
+                        <!-------------------------------------------------->
+                        <?php if (Yii::$app->controller->id == 'pacientes' && in_array(\Yii::$app->controller->action->id, ['index', 'create', 'update'])) {
+                            $li = "nav-item active";
+                            $a = "nav-link active";
+                        } else {
+                            $li = "nav-item";
+                            $a = "nav-link";
+                        }
+                        ?>
+                        <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/pacientes/pacientes/index']); ?>"><i class="nav-icon far fa-circle text-yellow"></i>
+                                <p>Pacientes</p>
                             </a></li>
                         <!-------------------------------------------------->
                     </ul>
