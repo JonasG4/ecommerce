@@ -2,8 +2,10 @@
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
     </a>
+</p>    
     <h1 align="center">Yii 2 Veterinaria UNIVO</h1>
    <br>
+   <p align="center">
     <a href="https://univo.edu.sv" target="_blank">
         <img src="https://www.univo.edu.sv/wp-content/uploads/2019/09/lo2.png">
     </a>
