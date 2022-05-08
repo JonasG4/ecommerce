@@ -65,3 +65,9 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+
+<?= $this->render('_gridPacientes', [
+    'model' => $model,
+    'searchModel' => $searchModel,
+    'dataProvider' => $dataProvider,
+]) ?>

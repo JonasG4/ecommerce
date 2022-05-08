@@ -10,7 +10,7 @@ vagrant/
 vendor/
 web/assets/
 web/avatars/
-web/images/
+web/pacientes/
 widgets/
 .gitattributes
 .bowerrc

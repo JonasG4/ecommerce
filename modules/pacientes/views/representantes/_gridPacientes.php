@@ -1,45 +1,26 @@
 <?php
 Yii::$app->language = 'es_ES';
 
+use app\models\TblEspecies;
+use app\models\TblPacientes;
+use app\models\TblRazas;
 use app\models\TblRepresentantes;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use kartik\export\ExportMenu;
-use yii\bootstrap4\Modal;
-use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\OsigSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Listado de Reprentantes';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-
-<?php
-//FIXME CREAR MODAL
-
-Modal::begin([
-    'options' => [
-        'tabindex' => false
-    ],
-    'title' => 'Crear registro',
-    'id' => 'create-modal',
-    'size' => 'modal-lg'
-]);
-echo "<div id='createModalContent'></div>";
-Modal::end();
-?>
-
-<?php Pjax::begin(['id' => 'datosGrid']); ?>
 <div class="row">
     <!-- left column -->
     <div class="col-md-12">
         <div class="tbl-cat-index">
 
-            <h1><?= Html::encode($this->title) ?></h1>
             <?php // echo $this->render('_search', ['model' => $searchModel]); 
             ?>
             <?php
@@ -53,13 +34,13 @@ Modal::end();
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
-                    'width' => '80px',
+                    'width' => '60px',
                     'format' => 'raw',
                     'vAlign' => 'middle',
                     'hAlign' => 'center',
-                    'attribute' => 'id_representante',
-                    'value' => function ($model) {
-                        return Html::tag('span', $model->id_representante, ['class' => 'badge bg-purple']);
+                    'attribute' => 'id_paciente',
+                    'value' => function ($model, $key, $index, $widget) {
+                        return Html::tag('span', $model->id_paciente, ['class' => 'badge bg-purple']);
                     },
                     'filter' => false,
                 ],
@@ -69,18 +50,53 @@ Modal::end();
                     'format' => 'raw',
                     'vAlign' => 'middle',
                     'hAlign' => 'center',
-                    'attribute' => 'cod_representante',
+                    'attribute' => 'cod_paciente',
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
-                    'attribute' => 'nombreCompleto',
+                    'attribute' => 'nombre',
                     'vAlign' => 'middle',
                     'format' => 'html',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::a($model->nombreCompleto,  ['view', 'id_representante' => $model->id_representante]);
+                        return Html::a($model->nombre,  ['pacientes/view', 'id_paciente' => $model->id_paciente]);
                     },
                     'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(TblRepresentantes::find()->orderBy('nombre')->all(), 'nombreCompleto', 'nombreCompleto'),
+                    'filter' => ArrayHelper::map(TblPacientes::find()->orderBy('nombre')->all(), 'nombre', 'nombre'),
+                    'filterWidgetOptions' => [
+                        'options' => ['placeholder' => 'Todos...'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ],
+                ],
+                /*[
+                    'class' => 'kartik\grid\DataColumn',
+                    'attribute' => 'id_representante',
+                    'vAlign' => 'middle',
+                    'format' => 'html',
+                    'value' => function ($model, $key, $index, $widget) {
+                        return Html::a($model->representante->nombreCompleto,  ['representantes/view', 'id_representante' => $model->representante->id_representante]);
+                    },
+                    'filterType' => GridView::FILTER_SELECT2,
+                    'filter' => ArrayHelper::map(TblRepresentantes::find()->orderBy('nombre')->all(), 'id_representante', 'nombreCompleto'),
+                    'filterWidgetOptions' => [
+                        'options' => ['placeholder' => 'Todos...'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ],
+                ],*/
+                [
+                    'class' => 'kartik\grid\DataColumn',
+                    'attribute' => 'id_especie',
+                    'vAlign' => 'middle',
+                    'format' => 'html',
+                    'value' => 'especie.nombre',
+                    /*'value' => function ($model, $key, $index, $widget) {
+                        return $model->especie->nombre;
+                    },*/
+                    'filterType' => GridView::FILTER_SELECT2,
+                    'filter' => ArrayHelper::map(TblEspecies::find()->orderBy('nombre')->all(), 'id_especie', 'nombre'),
                     'filterWidgetOptions' => [
                         'options' => ['placeholder' => 'Todos...'],
                         'pluginOptions' => [
@@ -90,17 +106,21 @@ Modal::end();
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
-                    'width' => '80px',
-                    'format' => 'raw',
+                    'attribute' => 'id_raza',
                     'vAlign' => 'middle',
-                    'attribute' => 'correo_electronico',
-                ],
-                [
-                    'class' => 'kartik\grid\DataColumn',
-                    'width' => '80px',
-                    'format' => 'raw',
-                    'vAlign' => 'middle',
-                    'attribute' => 'telefono',
+                    'format' => 'html',
+                    'value' => 'raza.nombre',
+                    /*'value' => function ($model, $key, $index, $widget) {
+                        return $model->especie->nombre;
+                    },*/
+                    'filterType' => GridView::FILTER_SELECT2,
+                    'filter' => ArrayHelper::map(TblRazas::find()->orderBy('nombre')->all(), 'id_raza', 'nombre'),
+                    'filterWidgetOptions' => [
+                        'options' => ['placeholder' => 'Todos...'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ],
                 ],
                 [
                     'class' => 'kartik\grid\BooleanColumn',
@@ -119,8 +139,8 @@ Modal::end();
                 ],
                 [
                     'class' => 'kartik\grid\ActionColumn',
-                    'urlCreator' => function ($action, TblRepresentantes $model, $key, $index, $column) {
-                        return Url::toRoute([$action, 'id_representante' => $model->id_representante]);
+                    'urlCreator' => function ($action, TblPacientes $model, $key, $index, $column) {
+                        return Url::toRoute([$action, 'id_paciente' => $model->id_paciente]);
                     }
                 ],
             ];
@@ -136,9 +156,9 @@ Modal::end();
             ]);
 
             echo GridView::widget([
-                'id' => 'datosGrid',
+                'id' => 'kv-pacientes',
                 'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
+                //'filterModel' => $searchModel,
                 'columns' => $gridColumns,
                 'containerOptions' => ['style' => 'overflow: auto'], // only set when $responsive = false
                 'headerRowOptions' => ['class' => 'kartik-sheet-style'],
@@ -148,9 +168,6 @@ Modal::end();
                 'toolbar' =>  [
                     [
                         'content' =>
-                        Html::button('<i class="fa fa-plus"></i> Modal', ['value' => Url::to('index.php?r=pacientes/representantes/create-modal'), 
-                        'class' => 'btn btn-warning', 'id' => 'modalButton'
-                        ]) .' &nbsp&nbsp '.
                         Html::a('<i class="fas fa-plus"></i> Agregar', ['create'], [
                             'class' => 'btn btn-success',
                             'data-pjax' => 0,
@@ -163,6 +180,7 @@ Modal::end();
                     ],
                     '{toggleData}',
                     $exportmenu,
+
                 ],
                 'toggleDataContainer' => ['class' => 'btn-group mr-2'],
                 // set export properties
@@ -175,7 +193,7 @@ Modal::end();
                 //'showPageSummary'=>$pageSummary,
                 'panel' => [
                     'type' => GridView::TYPE_PRIMARY,
-                    'heading' => 'Representantes',
+                    'heading' => 'Pacientes',
                 ],
                 'persistResize' => false,
             ]);
@@ -183,4 +201,3 @@ Modal::end();
         </div>
     </div>
 </div>
-<?php Pjax::end(); ?>

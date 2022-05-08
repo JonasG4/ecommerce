@@ -24,6 +24,12 @@ use Yii;
  * @property int $user_mod
  * @property string $fecha_mod
  * @property int $activo
+ *
+ * @property TblEspecies $especie
+ * @property TblRazas $raza
+ * @property TblRepresentantes $representante
+ * @property TblUsuarios $userIng
+ * @property TblUsuarios $userMod
  */
 class TblPacientes extends \yii\db\ActiveRecord
 {
@@ -48,6 +54,11 @@ class TblPacientes extends \yii\db\ActiveRecord
             [['cod_paciente'], 'string', 'max' => 25],
             [['nombre', 'imagen', 'color'], 'string', 'max' => 255],
             [['sexo'], 'string', 'max' => 1],
+            [['id_especie'], 'exist', 'skipOnError' => true, 'targetClass' => TblEspecies::class, 'targetAttribute' => ['id_especie' => 'id_especie']],
+            [['id_raza'], 'exist', 'skipOnError' => true, 'targetClass' => TblRazas::class, 'targetAttribute' => ['id_raza' => 'id_raza']],
+            [['id_representante'], 'exist', 'skipOnError' => true, 'targetClass' => TblRepresentantes::class, 'targetAttribute' => ['id_representante' => 'id_representante']],
+            [['user_ing'], 'exist', 'skipOnError' => true, 'targetClass' => TblUsuarios::class, 'targetAttribute' => ['user_ing' => 'id_usuario']],
+            [['user_mod'], 'exist', 'skipOnError' => true, 'targetClass' => TblUsuarios::class, 'targetAttribute' => ['user_mod' => 'id_usuario']],
         ];
     }
 
@@ -57,13 +68,13 @@ class TblPacientes extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_paciente' => 'Id Paciente',
-            'cod_paciente' => 'Cod Paciente',
-            'id_representante' => 'Id Representante',
+            'id_paciente' => 'Id',
+            'cod_paciente' => 'Codigo',
+            'id_representante' => 'Representante',
             'nombre' => 'Nombre',
             'imagen' => 'Imagen',
-            'id_especie' => 'Id Especie',
-            'id_raza' => 'Id Raza',
+            'id_especie' => 'Especie',
+            'id_raza' => 'Raza',
             'sexo' => 'Sexo',
             'fecha_nac' => 'Fecha Nac',
             'color' => 'Color',
@@ -75,5 +86,55 @@ class TblPacientes extends \yii\db\ActiveRecord
             'fecha_mod' => 'Fecha Mod',
             'activo' => 'Activo',
         ];
+    }
+
+    /**
+     * Gets query for [[Especie]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEspecie()
+    {
+        return $this->hasOne(TblEspecies::class, ['id_especie' => 'id_especie']);
+    }
+
+    /**
+     * Gets query for [[Raza]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRaza()
+    {
+        return $this->hasOne(TblRazas::class, ['id_raza' => 'id_raza']);
+    }
+
+    /**
+     * Gets query for [[Representante]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRepresentante()
+    {
+        return $this->hasOne(TblRepresentantes::class, ['id_representante' => 'id_representante']);
+    }
+
+    /**
+     * Gets query for [[UserIng]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserIng()
+    {
+        return $this->hasOne(TblUsuarios::class, ['id_usuario' => 'user_ing']);
+    }
+
+    /**
+     * Gets query for [[UserMod]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserMod()
+    {
+        return $this->hasOne(TblUsuarios::class, ['id_usuario' => 'user_mod']);
     }
 }

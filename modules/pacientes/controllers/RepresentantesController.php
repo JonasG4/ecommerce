@@ -6,6 +6,7 @@ use app\controllers\CoreController;
 use Yii;
 use app\models\TblMunicipios;
 use app\models\TblRepresentantes;
+use app\modules\pacientes\models\PacientesSearch;
 use app\modules\pacientes\models\RepresentantesSearch;
 use Exception;
 use yii\web\Controller;
@@ -60,8 +61,14 @@ class RepresentantesController extends Controller
      */
     public function actionView($id_representante)
     {
+        $searchModel = new PacientesSearch();
+        $searchModel->id_representante = $id_representante;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
         return $this->render('view', [
             'model' => $this->findModel($id_representante),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
