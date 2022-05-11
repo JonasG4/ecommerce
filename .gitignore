@@ -15,7 +15,6 @@ widgets/
 .gitattributes
 .bowerrc
 codeception.yml
-composer.json
 composer.lock
 docker-compose.yml
 requirements.php
