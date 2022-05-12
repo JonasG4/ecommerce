@@ -1,14 +1,10 @@
 # Ignore files and folders #
 ###################
 commands/
-#config/db.php
-mail/
-runtime/
-test/
-tests/
-vagrant/
-vendor/
-web/
+/mail
+/tests
+/vagrant
+/vendor
 composer.lock
 
 # Compiled source #
