@@ -1,26 +1,15 @@
 # Ignore files and folders #
 ###################
 commands/
-config/db.php
+#config/db.php
 mail/
 runtime/
 test/
 tests/
 vagrant/
 vendor/
-web/assets/
-web/avatars/
-web/pacientes/
-widgets/
-.gitattributes
-.bowerrc
-codeception.yml
+web/
 composer.lock
-docker-compose.yml
-requirements.php
-Vagrantfile
-yii
-yii.bat
 
 # Compiled source #
 ###################

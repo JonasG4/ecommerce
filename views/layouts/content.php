@@ -1,6 +1,6 @@
 <?php
 /* @var $content string */
-use hail812\adminlte3\widgets\FlashAlert;
+use hail812\adminlte\widgets\FlashAlert;
 use yii\bootstrap4\Breadcrumbs;
 ?>
 <div class="content-wrapper">
