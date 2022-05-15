@@ -109,7 +109,72 @@ use yii\helpers\Url;
                         <!-------------------------------------------------->
                     </ul>
                 </li>
-                <!------- FIN MENU CLIENTES ------->
+                <!------- FIN MENU PACIENTES ------->
+
+                <!------- MENU INVENTARIO ------->
+                <?php if (Yii::$app->controller->id == 'compras' || Yii::$app->controller->id == 'inventario' || Yii::$app->controller->id == 'productos' || Yii::$app->controller->id == 'proveedores') {
+                    $li = "nav-item has-treeview active menu-open";
+                    $a = "nav-link active";
+                } else {
+                    $li = "nav-item has-treeview";
+                    $a = "nav-link";
+                } ?>
+                <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="#"><i class="nav-icon fas fa-boxes"></i>
+                        <p>Inventario <i class="right fas fa-angle-left"></i> </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <!-------------------------------------------------->
+                        <?php if (Yii::$app->controller->id == 'proveedores' && in_array(\Yii::$app->controller->action->id, ['index', 'create', 'update'])) {
+                            $li = "nav-item active";
+                            $a = "nav-link active";
+                        } else {
+                            $li = "nav-item";
+                            $a = "nav-link";
+                        }
+                        ?>
+                        <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/inventario/proveedores/index']); ?>"><i class="nav-icon far fa-circle text-red"></i>
+                                <p>Proveedores</p>
+                            </a></li>
+                        <!-------------------------------------------------->
+                        <?php if (Yii::$app->controller->id == 'productos' && in_array(\Yii::$app->controller->action->id, ['index', 'create', 'update'])) {
+                            $li = "nav-item active";
+                            $a = "nav-link active";
+                        } else {
+                            $li = "nav-item";
+                            $a = "nav-link";
+                        }
+                        ?>
+                        <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/inventario/productos/index']); ?>"><i class="nav-icon far fa-circle text-blue"></i>
+                                <p>Productos</p>
+                            </a></li>
+                        <!-------------------------------------------------->
+                        <?php if (Yii::$app->controller->id == 'compras' && in_array(\Yii::$app->controller->action->id, ['index', 'create', 'update'])) {
+                            $li = "nav-item active";
+                            $a = "nav-link active";
+                        } else {
+                            $li = "nav-item";
+                            $a = "nav-link";
+                        }
+                        ?>
+                        <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/inventario/compras/index']); ?>"><i class="nav-icon far fa-circle text-green"></i>
+                                <p>Compras</p>
+                            </a></li>
+                        <!-------------------------------------------------->
+                        <?php if (Yii::$app->controller->id == 'inventario' && in_array(\Yii::$app->controller->action->id, ['index', 'create', 'update'])) {
+                            $li = "nav-item active";
+                            $a = "nav-link active";
+                        } else {
+                            $li = "nav-item";
+                            $a = "nav-link";
+                        }
+                        ?>
+                        <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/inventario/inventario/index']); ?>"><i class="nav-icon far fa-circle text-yellow"></i>
+                                <p>Inventario</p>
+                            </a></li>
+                        <!-------------------------------------------------->
+                    </ul>
+                </li>
+                <!------- FIN MENU INVENTARIO ------->
 
                 <!------- MENU USUARIOS ------->
                 <?php if (Yii::$app->controller->id == 'usuarios' || Yii::$app->controller->id == 'route' || Yii::$app->controller->id == 'permission' || Yii::$app->controller->id == 'role' || Yii::$app->controller->id == 'assignment') {

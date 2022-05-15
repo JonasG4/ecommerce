@@ -83,6 +83,9 @@ $config = [
         'pacientes' => [
             'class' => 'app\modules\pacientes\Pacientes',
         ],
+        'inventario' => [
+            'class' => 'app\modules\inventario\Inventario',
+        ],
     ],
     'params' => $params,
     'as access' => [
