@@ -29,7 +29,7 @@ use yii\helpers\Url;
                         <div class="col-md-6">
                             <?= Html::activeLabel($model, 'id_representante', ['class' => 'control-label']) ?>
                             <?= $form->field($model, 'id_representante', ['showLabels' => false])->widget(Select2::class, [
-                                'data' => ArrayHelper::map(TblRepresentantes::find()->all(), 'id_representante', 'nombre'),
+                                'data' => ArrayHelper::map(TblRepresentantes::find()->all(), 'id_representante', 'nombreCompleto'),
                                 'language' => 'es',
                                 'options' => ['placeholder' => '- Seleccionar Representante -'],
                                 'pluginOptions' => ['allowClear' => true],
@@ -74,14 +74,17 @@ use yii\helpers\Url;
                         </div>
                         <div class="col-md-4">
                             <?= Html::activeLabel($model, 'sexo', ['class' => 'control-label']) ?>
-                            <?= $form->field($model, 'sexo', ['showLabels' => false])->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($model, 'sexo', ['showLabels' => false])->radioList(
+                                ['M' => 'Macho', 'H' => 'Hembra',],
+                                ['custom' => true, 'inline' => true, 'id' => 'custom-radio-list-inline']
+                            ) ?>
                         </div>
                         <div class="col-md-4">
                             <?= Html::activeLabel($model, 'fecha_nac', ['class' => 'control-label']) ?>
                             <?= $form->field($model, 'fecha_nac', ['showLabels' => false])->widget(DatePicker::class, [
-                            'options' => ['placeholder' => 'Seleccionar fecha de nacimiento'],
-                            'pluginOptions' => ['autoclose' => true, 'format' => 'yyyy-m-dd', 'todayHighlight' => true],
-                        ]); ?>
+                                'options' => ['placeholder' => 'Seleccionar fecha de nacimiento'],
+                                'pluginOptions' => ['autoclose' => true, 'format' => 'yyyy-m-dd', 'todayHighlight' => true],
+                            ]); ?>
                         </div>
                         <div class="col-md-4">
                             <?= Html::activeLabel($model, 'color', ['class' => 'control-label']) ?>

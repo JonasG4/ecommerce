@@ -26,6 +26,22 @@ use kartik\export\ExportMenu;
             <?php
             $gridColumns = [
                 [
+                    'class' => 'kartik\grid\ExpandRowColumn',
+                    'width' => '50px',
+                    'value' => function ($model, $key, $index, $column) {
+                        return GridView::ROW_COLLAPSED;
+                    },
+                    'detail' => function ($model) {
+                        $paciente = TblPacientes::getPaciente($model->id_paciente);
+
+                        return Yii::$app->controller->renderPartial('_detalles',[
+                            'model' => $paciente,
+                        ]);
+                    },
+                    'headerOptions' => ['class' => 'kartik-sheet-style'],
+                    'expandOneOnly' => true
+                ],
+                [
                     'class' => 'kartik\grid\SerialColumn',
                     'contentOptions' => ['class' => 'kartik-sheet-style'],
                     'width' => '36px',
@@ -39,7 +55,7 @@ use kartik\export\ExportMenu;
                     'vAlign' => 'middle',
                     'hAlign' => 'center',
                     'attribute' => 'id_paciente',
-                    'value' => function ($model, $key, $index, $widget) {
+                    'value' => function ($model) {
                         return Html::tag('span', $model->id_paciente, ['class' => 'badge bg-purple']);
                     },
                     'filter' => false,

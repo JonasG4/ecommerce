@@ -61,12 +61,12 @@ $config = [
                 // ...
             ],
         ],
-        /*'urlManager' => [
+        'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
-        ],*/
+        ],
     ],
     'modules' => [
         'gridview' =>  [

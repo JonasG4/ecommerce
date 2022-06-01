@@ -8,7 +8,7 @@ use yii\helpers\Html;
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            <a class="nav-link" id="hamburger" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
     </ul>
 
@@ -41,7 +41,5 @@ use yii\helpers\Html;
             <?= Html::a('<i class="fas fa-sign-out-alt"></i>', ['/site/logout'], ['data-method' => 'post', 'class' => 'nav-link']) ?>
         </li>
     </ul>
-
-
 </nav>
 <!-- /.navbar -->

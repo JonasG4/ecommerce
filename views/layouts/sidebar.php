@@ -10,8 +10,9 @@ use yii\helpers\Url;
 
 <aside class="main-sidebar sidebar-dark-warning elevation-4" style="z-index: 1040 !important;">
     <!-- Brand Logo -->
-    <a href="<?= Url::home() ?>" class="brand-link">
-        <img src="logo.png" alt="Logo" class="brand-image" style="opacity: .8">
+    <a href="<?= Url::home() ?>" class="brand-link logo-switch">
+        <img src="/logo-mini.png" alt="Logo" class="brand-image-xl logo-xs">
+        <img src="/logo.png" alt="Logo" class="brand-image-xs logo-xl" style="left: 12px">
         </br>
     </a>
 
@@ -29,7 +30,7 @@ use yii\helpers\Url;
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent nav-compact" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column nav-compact nav-flat" data-widget="treeview" role="menu" data-accordion="false">
 
                 <!------- DASHBOARD ------->
                 <?php if (Yii::$app->controller->id == 'site' && in_array(\Yii::$app->controller->action->id, ['index'])) {

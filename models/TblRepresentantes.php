@@ -38,7 +38,7 @@ class TblRepresentantes extends \yii\db\ActiveRecord
         return 'tbl_representantes';
     }
 
-    //FIX: Getter para nombre completo de representante
+    //? Getter para nombre completo de representante
     public function getNombreCompleto(){
         return $this->nombre . ' ' . $this->apellido;
     }

@@ -47,7 +47,7 @@ class TblPacientes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cod_paciente', 'id_representante', 'nombre', 'imagen', 'id_especie', 'id_raza', 'sexo', 'fecha_nac', 'color', 'user_ing', 'fecha_ing', 'user_mod', 'fecha_mod', 'activo'], 'required'],
+            [['cod_paciente', 'id_representante', 'nombre', 'id_especie', 'id_raza', 'sexo', 'fecha_nac', 'color', 'user_ing', 'fecha_ing', 'user_mod', 'fecha_mod', 'activo'], 'required'],
             [['id_representante', 'id_especie', 'id_raza', 'user_ing', 'user_mod', 'activo'], 'integer'],
             [['fecha_nac', 'fecha_ing', 'fecha_mod'], 'safe'],
             [['caracteristicas', 'alergias'], 'string'],
@@ -60,6 +60,13 @@ class TblPacientes extends \yii\db\ActiveRecord
             [['user_ing'], 'exist', 'skipOnError' => true, 'targetClass' => TblUsuarios::class, 'targetAttribute' => ['user_ing' => 'id_usuario']],
             [['user_mod'], 'exist', 'skipOnError' => true, 'targetClass' => TblUsuarios::class, 'targetAttribute' => ['user_mod' => 'id_usuario']],
         ];
+    }
+
+    //? Getter para recuperar data de un solo paciente
+    public static function getPaciente($id_paciente)
+    {
+        $paciente = TblPacientes::find()->where(['id_paciente' => $id_paciente])->one();
+        return $paciente;
     }
 
     /**

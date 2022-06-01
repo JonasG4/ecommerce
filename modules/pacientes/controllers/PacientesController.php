@@ -2,13 +2,17 @@
 
 namespace app\modules\pacientes\controllers;
 
+use app\controllers\CoreController;
 use app\models\TblPacientes;
 use app\models\TblRazas;
 use app\modules\pacientes\models\PacientesSearch;
+use Exception;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+use yii\web\UploadedFile;
 
 /**
  * PacientesController implements the CRUD actions for TblPacientes model.
@@ -24,7 +28,7 @@ class PacientesController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -62,26 +66,80 @@ class PacientesController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new TblPacientes model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
+
         $model = new TblPacientes();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_paciente' => $model->id_paciente]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
+        if ($model->load($this->request->post())) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+                $image = UploadedFile::getInstance($model, 'imagen');
+                if (empty($image)) {
+                    $name = $this->request->baseUrl . '/pacientes/sin_imagen.jpg';
+                    $model->imagen = $name;
+                } else {
+                    $tmp = explode(".", $image->name);
+                    $ext = end($tmp);
+                    $name = Yii::$app->security->generateRandomString() . ".{$ext}";
+                    $relativePath = Yii::$app->basePath . '/web/pacientes/' . $name;
+                    $path = Yii::$app->request->baseUrl . '/pacientes/' . $name;
+                    $model->imagen = $path;
+                    $image->saveAs($relativePath);
+                }
+
+                $model->cod_paciente = $this->CreateCode();
+                $model->fecha_ing = date('Y-m-d H:i:s');
+                $model->fecha_mod = date('Y-m-d H:i:s');
+                $model->user_ing = \Yii::$app->user->identity->id;
+                $model->user_mod = \Yii::$app->user->identity->id;
+
+                if (!$model->save()) {
+                    throw new Exception(implode("<br />", \yii\helpers\ArrayHelper::getColumn($model->getErrors(), 0, false)));
+                }
+
+                $transaction->commit();
+            } catch (Exception $e) {
+                $transaction->rollBack();
+                $controller = Yii::$app->controller->id . "/" . Yii::$app->controller->action->id;
+                CoreController::getErrorLog(\Yii::$app->user->identity->id, $e, $controller);
+                return $this->redirect(['index']);
+            }
+            Yii::$app->session->setFlash('success', "Registro creado exitosamente.");
+            return $this->redirect(['view', 'id_paciente' => $model->id_paciente]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    function CreateCode()
+    {
+        $paciente = TblPacientes::find()->orderBy(['id_paciente' => SORT_DESC])->one();
+        if (empty($paciente->cod_paciente)) $codigo = 0;
+        else $codigo = $paciente->cod_paciente;
+
+        $int = intval(preg_replace('/[^0-9]+/', '', $codigo), 10);
+        $id = $int + 1;
+
+        $numero = $id;
+        $tmp = "";
+        if ($id < 10) {
+            $tmp .= "000";
+            $tmp .= $id;
+        } elseif ($id >= 10 && $id < 100) {
+            $tmp .= "00";
+            $tmp .= $id;
+        } elseif ($id >= 100 && $id < 1000) {
+            $tmp .= "0";
+            $tmp .= $id;
+        } else {
+            $tmp .= $id;
+        }
+        $result = str_replace($id, $tmp, $numero);
+        return "PA-" . $result;
     }
 
     /**
