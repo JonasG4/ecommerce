@@ -115,6 +115,10 @@ use yii\helpers\Url;
                             ]); ?>
                         </div>
                         <div class="col-md-6">
+                            <?= Html::activeLabel($model, 'vacunas', ['class' => 'control-label']) ?>
+                            <?= $form->field($model, 'vacunas', ['showLabels' => false])->checkboxlist(ArrayHelper::map($vacunas, 'id_vacuna', 'nombre')); ?>
+                        </div>
+                        <div class="col-md-6">
                             <?= Html::activeLabel($model, 'activo', ['class' => 'control-label']) ?>
                             <?= $form->field($model, 'activo', ['showLabels' => false])->label('visible')->widget(SwitchInput::class, [
                                 'value' => $model->activo, //checked status can change by db value

@@ -65,6 +65,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td colspan="3"><?= $model->alergias ?></td>
                     </tr>
                     <tr>
+                        <td><b>Lista de vacunas:</b></td>
+                        <td>
+                            <?php if ($vacunas) { ?>
+                                <?php $n = 1;
+                                foreach ($vacunas as $vacuna) { ?>
+                                    <?php echo $n . ' - ' . $vacuna->vacuna->nombre; ?><br />
+                                <?php $n++;
+                                } ?>
+                            <?php } ?>
+                        </td>
+                    </tr>
+                    <tr>
                         <td><b>Creado por: </b></td>
                         <td><?= $model->userIng->nombreCompleto ?></td>
                         <td><b>Modificado por: </b></td>

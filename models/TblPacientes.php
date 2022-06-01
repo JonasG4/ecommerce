@@ -41,6 +41,8 @@ class TblPacientes extends \yii\db\ActiveRecord
         return 'tbl_pacientes';
     }
 
+    public $vacunas;
+
     /**
      * {@inheritdoc}
      */
@@ -92,6 +94,7 @@ class TblPacientes extends \yii\db\ActiveRecord
             'user_mod' => 'User Mod',
             'fecha_mod' => 'Fecha Mod',
             'activo' => 'Activo',
+            'vacunas' => 'Lista de verificacion de vacunas',
         ];
     }
 

@@ -4,7 +4,9 @@ namespace app\modules\pacientes\controllers;
 
 use app\controllers\CoreController;
 use app\models\TblPacientes;
+use app\models\TblPacientesVacunas;
 use app\models\TblRazas;
+use app\models\TblVacunas;
 use app\modules\pacientes\models\PacientesSearch;
 use Exception;
 use Yii;
@@ -61,14 +63,16 @@ class PacientesController extends Controller
      */
     public function actionView($id_paciente)
     {
+        $vacunas = TblPacientesVacunas::find()->where(['id_paciente' => $id_paciente])->all();
+
         return $this->render('view', [
             'model' => $this->findModel($id_paciente),
+            'vacunas' => $vacunas,
         ]);
     }
 
     public function actionCreate()
     {
-
         $model = new TblPacientes();
 
         if ($model->load($this->request->post())) {
@@ -99,6 +103,16 @@ class PacientesController extends Controller
                     throw new Exception(implode("<br />", \yii\helpers\ArrayHelper::getColumn($model->getErrors(), 0, false)));
                 }
 
+                foreach($_POST['TblPacientes']['vacunas'] as $idVacuna){
+                    $modelPacientesVacunas = new TblPacientesVacunas();
+                    $modelPacientesVacunas->id_paciente = $model->id_paciente;
+                    $modelPacientesVacunas->id_vacuna = $idVacuna;
+
+                    if (!$modelPacientesVacunas->save()) {
+                        throw new Exception(implode("<br />", \yii\helpers\ArrayHelper::getColumn($model->getErrors(), 0, false)));
+                    }
+                }
+
                 $transaction->commit();
             } catch (Exception $e) {
                 $transaction->rollBack();
@@ -111,6 +125,7 @@ class PacientesController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'vacunas' => TblVacunas::getVacunas(),
             ]);
         }
     }

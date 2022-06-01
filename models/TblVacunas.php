@@ -41,4 +41,9 @@ class TblVacunas extends \yii\db\ActiveRecord
             'nombre' => 'Nombre',
         ];
     }
+
+    public static function getVacunas()
+    {
+        return TblVacunas::find()->select(['id_vacuna', 'nombre'])->all();
+    }
 }
