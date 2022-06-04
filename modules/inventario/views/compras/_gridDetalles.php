@@ -6,11 +6,14 @@ use app\models\TblEspecies;
 use app\models\TblPacientes;
 use app\models\TblRazas;
 use app\models\TblRepresentantes;
+use kartik\editable\Editable;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use kartik\export\ExportMenu;
+use kartik\grid\EditableColumn;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\OsigSearch */
@@ -41,20 +44,63 @@ use kartik\export\ExportMenu;
                     'value' => 'producto.nombre',
                 ],
                 [
-                    'class' => 'kartik\grid\DataColumn',
-                    'attribute' => 'precio',
+                    'class' => 'kartik\grid\EditableColumn',
+                    'attribute' => 'cantidad',
+                    'editableOptions' => [
+                        'header' => 'Cantidad',
+                        'asPopover' => false,
+                        'formOptions' => ['action' => ['/inventario/compras/editarcantidad']],
+                        'inputType' => Editable::INPUT_TEXT,
+                        'options' => [
+                            'pluginOptions' => ['min' => 0, 'max' => 5000]
+                        ]
+                    ],
+                    'refreshGrid' => true,
+                    'hAlign' => 'right',
                     'vAlign' => 'middle',
-                    'format' => 'html',
+                    'format' => ['decimal', 2],
+                    'pageSummary' => true,
+                    //'width'=>'20px',       
                 ],
                 [
-                    'class' => 'kartik\grid\DataColumn',
-                    'attribute' => 'cantidad',
+                    'class' => 'kartik\grid\EditableColumn',
+                    'attribute' => 'precio',
+                    'editableOptions' => [
+                        'header' => 'Precio',
+                        'asPopover' => false,
+                        'formOptions' => ['action' => ['/inventario/compras/editarprecio']],
+                        'inputType' => Editable::INPUT_TEXT,
+                        'options' => [
+                            'pluginOptions' => ['min' => 0, 'max' => 5000]
+                        ]
+                    ],
+                    'refreshGrid' => true,
+                    'hAlign' => 'right',
                     'vAlign' => 'middle',
-                    'format' => 'html',
-                    'value' => 'cantidad',
+                    'format' => ['currency'],
+                    'pageSummary' => true,
+                    //'width'=>'20px',       
+                ],
+                [
+                    'class' => 'kartik\grid\FormulaColumn',
+                    'header' => 'Total',
+                    'vAlign' => 'middle',
+                    'value' => function ($model, $key, $index, $widget) {
+                        $p = compact('model', 'key', 'index');
+                        return  $widget->col(2, $p) * $widget->col(3, $p);
+                    },
+                    'headerOptions' => ['class' => 'kartik-sheet-style'],
+                    'hAlign' => 'right',
+                    'width' => '7%',
+                    'format' => ['currency'],
+                    'mergeHeader' => true,
+                    'pageSummary' => true,
+                    'footer' => true
                 ],
                 [
                     'class' => 'kartik\grid\ActionColumn',
+                    'header' => 'Eliminar',
+                    'template' => '{delete}',
                     'urlCreator' => function ($action, TblDetCompras $model, $key, $index, $column) {
                         return Url::toRoute([$action, 'id_det_compra' => $model->id_det_compra]);
                     }
@@ -106,7 +152,7 @@ use kartik\export\ExportMenu;
                 'condensed' => true,
                 'responsive' => true,
                 'hover' => true,
-                //'showPageSummary'=>$pageSummary,
+                'showPageSummary' => true,
                 'panel' => [
                     'type' => GridView::TYPE_PRIMARY,
                     'heading' => 'Items',

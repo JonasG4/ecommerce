@@ -7,9 +7,11 @@ use app\models\TblDetCompras;
 use app\models\TblInventario;
 use app\modules\inventario\models\ComprasSearch;
 use app\modules\inventario\models\DetComprasSearch;
+use kartik\grid\EditableColumnAction;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * ComprasController implements the CRUD actions for TblCompras model.
@@ -140,6 +142,20 @@ class ComprasController extends Controller
         $this->findModel($id_compra)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actions()
+    {
+        return ArrayHelper::merge(parent::actions(), [
+            'editarprecio' => [                             // identifier for your editable action
+                'class' => EditableColumnAction::class,     // action class name
+                'modelClass' => TblDetCompras::class,       // the update model class
+            ],
+            'editarcantidad' => [                           // identifier for your editable action
+                'class' => EditableColumnAction::class,     // action class name
+                'modelClass' => TblDetCompras::class,       // the update mode class                
+            ]
+        ]);
     }
 
     /**

@@ -129,6 +129,16 @@ class TblPacientes extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[TblPacientesVacunas]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTblPacientesVacunas()
+    {
+        return $this->hasMany(TblPacientesVacunas::class, ['id_paciente' => 'id_paciente']);
+    }
+
+    /**
      * Gets query for [[UserIng]].
      *
      * @return \yii\db\ActiveQuery

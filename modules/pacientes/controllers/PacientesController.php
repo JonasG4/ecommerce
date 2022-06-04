@@ -13,6 +13,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\UploadedFile;
 
@@ -103,7 +104,7 @@ class PacientesController extends Controller
                     throw new Exception(implode("<br />", \yii\helpers\ArrayHelper::getColumn($model->getErrors(), 0, false)));
                 }
 
-                foreach($_POST['TblPacientes']['vacunas'] as $idVacuna){
+                foreach ($_POST['TblPacientes']['vacunas'] as $idVacuna) {
                     $modelPacientesVacunas = new TblPacientesVacunas();
                     $modelPacientesVacunas->id_paciente = $model->id_paciente;
                     $modelPacientesVacunas->id_vacuna = $idVacuna;
@@ -167,14 +168,47 @@ class PacientesController extends Controller
     public function actionUpdate($id_paciente)
     {
         $model = $this->findModel($id_paciente);
+        $vacunas = TblVacunas::find()->all();
+        $model->vacunas = ArrayHelper::getColumn($model->getTblPacientesVacunas()->asArray()->all(), 'id_vacuna');
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+
+        if ($model->load($this->request->post())) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $model->fecha_mod = date('Y-m-d H:i:s');
+                $model->user_mod = \Yii::$app->user->identity->id;
+
+                if (!$model->save()) {
+                    throw new Exception(implode("<br />", \yii\helpers\ArrayHelper::getColumn($model->getErrors(), 0, false)));
+                }
+
+                \Yii::$app->db->createCommand()->delete('tbl_pacientes_vacunas', ['id_paciente' => $id_paciente])->execute();
+
+                foreach ($_POST['TblPacientes']['vacunas'] as $idVacuna) {
+                    $modelPacientesVacunas = new TblPacientesVacunas();
+                    $modelPacientesVacunas->id_paciente = $model->id_paciente;
+                    $modelPacientesVacunas->id_vacuna = $idVacuna;
+
+                    if (!$modelPacientesVacunas->save()) {
+                        throw new Exception(implode("<br />", \yii\helpers\ArrayHelper::getColumn($model->getErrors(), 0, false)));
+                    }
+                }
+                $transaction->commit();
+            } catch (Exception $e) {
+                $transaction->rollBack();
+                $controller = Yii::$app->controller->id . "/" . Yii::$app->controller->action->id;
+                CoreController::getErrorLog(\Yii::$app->user->identity->id, $e, $controller);
+                return $this->redirect(['index']);
+            }
+            Yii::$app->session->setFlash('success', "Registro creado exitosamente.");
             return $this->redirect(['view', 'id_paciente' => $model->id_paciente]);
-        }
+        } else {
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+            return $this->render('update', [
+                'model' => $model,
+                'vacunas' => $vacunas,
+            ]);
+        }
     }
 
     /**
