@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 08, 2022 at 01:59 PM
+-- Generation Time: Jun 04, 2022 at 09:16 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.28
 
@@ -70,8 +70,8 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/inicio/index', 2, NULL, NULL, NULL, 1646100390, 1646100390),
 ('/inicio/resta', 2, NULL, NULL, NULL, 1646100390, 1646100390),
 ('/inicio/suma', 2, NULL, NULL, NULL, 1646100390, 1646100390),
+('/inventario/*', 2, NULL, NULL, NULL, 1652626247, 1652626247),
 ('/pacientes/*', 2, NULL, NULL, NULL, 1646575869, 1646575869),
-('/productos/*', 2, NULL, NULL, NULL, 1646099423, 1646099423),
 ('/rbac/*', 2, NULL, NULL, NULL, 1646099493, 1646099493),
 ('/site/*', 2, NULL, NULL, NULL, 1646099406, 1646099406),
 ('/usuarios/*', 2, NULL, NULL, NULL, 1646099428, 1646099428),
@@ -105,9 +105,8 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('MasterAccess', '/gridview/*'),
 ('MasterAccess', '/inicio/*'),
 ('UsuarioAccess', '/inicio/suma'),
+('MasterAccess', '/inventario/*'),
 ('MasterAccess', '/pacientes/*'),
-('MasterAccess', '/productos/*'),
-('UsuarioAccess', '/productos/*'),
 ('MasterAccess', '/rbac/*'),
 ('MasterAccess', '/site/*'),
 ('UsuarioAccess', '/site/*'),
@@ -156,6 +155,31 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_compras`
+--
+
+CREATE TABLE `tbl_compras` (
+  `id_compra` int(11) NOT NULL,
+  `id_proveedor` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `num_documento` varchar(255) NOT NULL,
+  `fecha_ing` datetime NOT NULL,
+  `user_ing` int(11) NOT NULL,
+  `fecha_mod` datetime NOT NULL,
+  `user_mod` int(11) NOT NULL,
+  `estado` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_compras`
+--
+
+INSERT INTO `tbl_compras` (`id_compra`, `id_proveedor`, `fecha`, `num_documento`, `fecha_ing`, `user_ing`, `fecha_mod`, `user_mod`, `estado`) VALUES
+(1, 1, '2022-05-15', '0987554', '2022-05-15 14:35:08', 1, '2022-05-15 14:35:08', 1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_departamentos`
 --
 
@@ -188,6 +212,31 @@ INSERT INTO `tbl_departamentos` (`id_departamento`, `nombre`, `codigo`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_det_compras`
+--
+
+CREATE TABLE `tbl_det_compras` (
+  `id_det_compra` int(11) NOT NULL,
+  `id_compra` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `precio` decimal(10,2) NOT NULL,
+  `cantidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_det_compras`
+--
+
+INSERT INTO `tbl_det_compras` (`id_det_compra`, `id_compra`, `id_producto`, `precio`, `cantidad`) VALUES
+(1, 1, 1, '2.50', 40),
+(2, 1, 2, '1.50', 25),
+(3, 1, 3, '1.00', 10),
+(4, 1, 4, '1.75', 35),
+(5, 1, 5, '0.75', 50);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_error_log`
 --
 
@@ -215,7 +264,8 @@ INSERT INTO `tbl_error_log` (`id_error_log`, `controller`, `mensaje`, `us_id`, `
 (9, 'representantes/create-modal', 'Exception: User Mod is invalid. in C:\\laragon\\www\\veterinaria\\modules\\pacientes\\controllers\\RepresentantesController.php:120<br />\nStack trace:<br />\n#0 [internal function]: app\\modules\\pacientes\\controllers\\RepresentantesController-&gt;actionCreateModal()<br />\n#1 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\InlineAction.php(57): call_user_func_array(Array, Array)<br />\n#2 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Controller.php(178): yii\\base\\InlineAction-&gt;runWithParams(Array)<br />\n#3 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Module.php(552): yii\\base\\Controller-&gt;runAction(&#039;create-modal&#039;, Array)<br />\n#4 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\web\\Application.php(103): yii\\base\\Module-&gt;runAction(&#039;pacientes/repre...&#039;, Array)<br />\n#5 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Application.php(384): yii\\web\\Application-&gt;handleRequest(Object(yii\\web\\Request))<br />\n#6 C:\\laragon\\www\\veterinaria\\web\\index.php(12): yii\\base\\Application-&gt;run()<br />\n#7 {main}', 1, '2022-04-03 09:21:56'),
 (10, 'representantes/create-modal', 'Exception: User Mod is invalid. in C:\\laragon\\www\\veterinaria\\modules\\pacientes\\controllers\\RepresentantesController.php:128<br />\nStack trace:<br />\n#0 [internal function]: app\\modules\\pacientes\\controllers\\RepresentantesController-&gt;actionCreateModal()<br />\n#1 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\InlineAction.php(57): call_user_func_array(Array, Array)<br />\n#2 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Controller.php(178): yii\\base\\InlineAction-&gt;runWithParams(Array)<br />\n#3 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Module.php(552): yii\\base\\Controller-&gt;runAction(&#039;create-modal&#039;, Array)<br />\n#4 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\web\\Application.php(103): yii\\base\\Module-&gt;runAction(&#039;pacientes/repre...&#039;, Array)<br />\n#5 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Application.php(384): yii\\web\\Application-&gt;handleRequest(Object(yii\\web\\Request))<br />\n#6 C:\\laragon\\www\\veterinaria\\web\\index.php(12): yii\\base\\Application-&gt;run()<br />\n#7 {main}', 1, '2022-04-03 09:34:05'),
 (11, 'especies/delete', 'PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`yii2_veterinaria`.`tbl_razas`, CONSTRAINT `tbl_razas_ibfk_1` FOREIGN KEY (`id_especie`) REFERENCES `tbl_especies` (`id_especie`)) in C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php:1302<br />\nStack trace:<br />\n#0 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php(1302): PDOStatement-&gt;execute()<br />\n#1 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php(1102): yii\\db\\Command-&gt;internalExecute(&#039;DELETE FROM `tb...&#039;)<br />\n#2 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(405): yii\\db\\Command-&gt;execute()<br />\n#3 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(765): yii\\db\\ActiveRecord::deleteAll(Array)<br />\n#4 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(724): yii\\db\\ActiveRecord-&gt;deleteInternal()<br />\n#5 C:\\laragon\\www\\veterinaria\\modules\\pacientes\\controllers\\EspeciesController.php(142): yii\\db\\ActiveRecord-&gt;delete()<br />\n#6 [internal function]: app\\modules\\pacientes\\controllers\\EspeciesController-&gt;actionDelete(&#039;1&#039;)<br />\n#7 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\InlineAction.php(57): call_user_func_array(Array, Array)<br />\n#8 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Controller.php(178): yii\\base\\InlineAction-&gt;runWithParams(Array)<br />\n#9 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Module.php(552): yii\\base\\Controller-&gt;runAction(&#039;delete&#039;, Array)<br />\n#10 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\web\\Application.php(103): yii\\base\\Module-&gt;runAction(&#039;pacientes/espec...&#039;, Array)<br />\n#11 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Application.php(384): yii\\web\\Application-&gt;handleRequest(Object(yii\\web\\Request))<br />\n#12 C:\\laragon\\www\\veterinaria\\web\\index.php(12): yii\\base\\Application-&gt;run()<br />\n#13 {main}<br />\n<br />\nNext yii\\db\\IntegrityException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`yii2_veterinaria`.`tbl_razas`, CONSTRAINT `tbl_razas_ibfk_1` FOREIGN KEY (`id_especie`) REFERENCES `tbl_especies` (`id_especie`))<br />\nThe SQL being executed was: DELETE FROM `tbl_especies` WHERE `id_especie`=1 in C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Schema.php:676<br />\nStack trace:<br />\n#0 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php(1307): yii\\db\\Schema-&gt;convertException(Object(PDOException), &#039;DELETE FROM `tb...&#039;)<br />\n#1 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php(1102): yii\\db\\Command-&gt;internalExecute(&#039;DELETE FROM `tb...&#039;)<br />\n#2 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(405): yii\\db\\Command-&gt;execute()<br />\n#3 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(765): yii\\db\\ActiveRecord::deleteAll(Array)<br />\n#4 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(724): yii\\db\\ActiveRecord-&gt;deleteInternal()<br />\n#5 C:\\laragon\\www\\veterinaria\\modules\\pacientes\\controllers\\EspeciesController.php(142): yii\\db\\ActiveRecord-&gt;delete()<br />\n#6 [internal function]: app\\modules\\pacientes\\controllers\\EspeciesController-&gt;actionDelete(&#039;1&#039;)<br />\n#7 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\InlineAction.php(57): call_user_func_array(Array, Array)<br />\n#8 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Controller.php(178): yii\\base\\InlineAction-&gt;runWithParams(Array)<br />\n#9 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Module.php(552): yii\\base\\Controller-&gt;runAction(&#039;delete&#039;, Array)<br />\n#10 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\web\\Application.php(103): yii\\base\\Module-&gt;runAction(&#039;pacientes/espec...&#039;, Array)<br />\n#11 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Application.php(384): yii\\web\\Application-&gt;handleRequest(Object(yii\\web\\Request))<br />\n#12 C:\\laragon\\www\\veterinaria\\web\\index.php(12): yii\\base\\Application-&gt;run()<br />\n#13 {main}<br />\r\nAdditional Information:<br />\r\nArray<br />\n(<br />\n    [0] =&gt; 23000<br />\n    [1] =&gt; 1451<br />\n    [2] =&gt; Cannot delete or update a parent row: a foreign key constraint fails (`yii2_veterinaria`.`tbl_razas`, CONSTRAINT `tbl_razas_ibfk_1` FOREIGN KEY (`id_especie`) REFERENCES `tbl_especies` (`id_especie`))<br />\n)<br />\n', 1, '2022-04-24 07:42:56'),
-(12, 'especies/delete', 'PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`yii2_veterinaria`.`tbl_razas`, CONSTRAINT `tbl_razas_ibfk_1` FOREIGN KEY (`id_especie`) REFERENCES `tbl_especies` (`id_especie`)) in C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php:1302<br />\nStack trace:<br />\n#0 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php(1302): PDOStatement-&gt;execute()<br />\n#1 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php(1102): yii\\db\\Command-&gt;internalExecute(&#039;DELETE FROM `tb...&#039;)<br />\n#2 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(405): yii\\db\\Command-&gt;execute()<br />\n#3 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(765): yii\\db\\ActiveRecord::deleteAll(Array)<br />\n#4 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(724): yii\\db\\ActiveRecord-&gt;deleteInternal()<br />\n#5 C:\\laragon\\www\\veterinaria\\modules\\pacientes\\controllers\\EspeciesController.php(142): yii\\db\\ActiveRecord-&gt;delete()<br />\n#6 [internal function]: app\\modules\\pacientes\\controllers\\EspeciesController-&gt;actionDelete(&#039;2&#039;)<br />\n#7 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\InlineAction.php(57): call_user_func_array(Array, Array)<br />\n#8 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Controller.php(178): yii\\base\\InlineAction-&gt;runWithParams(Array)<br />\n#9 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Module.php(552): yii\\base\\Controller-&gt;runAction(&#039;delete&#039;, Array)<br />\n#10 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\web\\Application.php(103): yii\\base\\Module-&gt;runAction(&#039;pacientes/espec...&#039;, Array)<br />\n#11 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Application.php(384): yii\\web\\Application-&gt;handleRequest(Object(yii\\web\\Request))<br />\n#12 C:\\laragon\\www\\veterinaria\\web\\index.php(12): yii\\base\\Application-&gt;run()<br />\n#13 {main}<br />\n<br />\nNext yii\\db\\IntegrityException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`yii2_veterinaria`.`tbl_razas`, CONSTRAINT `tbl_razas_ibfk_1` FOREIGN KEY (`id_especie`) REFERENCES `tbl_especies` (`id_especie`))<br />\nThe SQL being executed was: DELETE FROM `tbl_especies` WHERE `id_especie`=2 in C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Schema.php:676<br />\nStack trace:<br />\n#0 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php(1307): yii\\db\\Schema-&gt;convertException(Object(PDOException), &#039;DELETE FROM `tb...&#039;)<br />\n#1 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php(1102): yii\\db\\Command-&gt;internalExecute(&#039;DELETE FROM `tb...&#039;)<br />\n#2 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(405): yii\\db\\Command-&gt;execute()<br />\n#3 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(765): yii\\db\\ActiveRecord::deleteAll(Array)<br />\n#4 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(724): yii\\db\\ActiveRecord-&gt;deleteInternal()<br />\n#5 C:\\laragon\\www\\veterinaria\\modules\\pacientes\\controllers\\EspeciesController.php(142): yii\\db\\ActiveRecord-&gt;delete()<br />\n#6 [internal function]: app\\modules\\pacientes\\controllers\\EspeciesController-&gt;actionDelete(&#039;2&#039;)<br />\n#7 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\InlineAction.php(57): call_user_func_array(Array, Array)<br />\n#8 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Controller.php(178): yii\\base\\InlineAction-&gt;runWithParams(Array)<br />\n#9 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Module.php(552): yii\\base\\Controller-&gt;runAction(&#039;delete&#039;, Array)<br />\n#10 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\web\\Application.php(103): yii\\base\\Module-&gt;runAction(&#039;pacientes/espec...&#039;, Array)<br />\n#11 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Application.php(384): yii\\web\\Application-&gt;handleRequest(Object(yii\\web\\Request))<br />\n#12 C:\\laragon\\www\\veterinaria\\web\\index.php(12): yii\\base\\Application-&gt;run()<br />\n#13 {main}<br />\r\nAdditional Information:<br />\r\nArray<br />\n(<br />\n    [0] =&gt; 23000<br />\n    [1] =&gt; 1451<br />\n    [2] =&gt; Cannot delete or update a parent row: a foreign key constraint fails (`yii2_veterinaria`.`tbl_razas`, CONSTRAINT `tbl_razas_ibfk_1` FOREIGN KEY (`id_especie`) REFERENCES `tbl_especies` (`id_especie`))<br />\n)<br />\n', 1, '2022-04-24 07:44:09');
+(12, 'especies/delete', 'PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`yii2_veterinaria`.`tbl_razas`, CONSTRAINT `tbl_razas_ibfk_1` FOREIGN KEY (`id_especie`) REFERENCES `tbl_especies` (`id_especie`)) in C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php:1302<br />\nStack trace:<br />\n#0 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php(1302): PDOStatement-&gt;execute()<br />\n#1 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php(1102): yii\\db\\Command-&gt;internalExecute(&#039;DELETE FROM `tb...&#039;)<br />\n#2 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(405): yii\\db\\Command-&gt;execute()<br />\n#3 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(765): yii\\db\\ActiveRecord::deleteAll(Array)<br />\n#4 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(724): yii\\db\\ActiveRecord-&gt;deleteInternal()<br />\n#5 C:\\laragon\\www\\veterinaria\\modules\\pacientes\\controllers\\EspeciesController.php(142): yii\\db\\ActiveRecord-&gt;delete()<br />\n#6 [internal function]: app\\modules\\pacientes\\controllers\\EspeciesController-&gt;actionDelete(&#039;2&#039;)<br />\n#7 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\InlineAction.php(57): call_user_func_array(Array, Array)<br />\n#8 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Controller.php(178): yii\\base\\InlineAction-&gt;runWithParams(Array)<br />\n#9 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Module.php(552): yii\\base\\Controller-&gt;runAction(&#039;delete&#039;, Array)<br />\n#10 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\web\\Application.php(103): yii\\base\\Module-&gt;runAction(&#039;pacientes/espec...&#039;, Array)<br />\n#11 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Application.php(384): yii\\web\\Application-&gt;handleRequest(Object(yii\\web\\Request))<br />\n#12 C:\\laragon\\www\\veterinaria\\web\\index.php(12): yii\\base\\Application-&gt;run()<br />\n#13 {main}<br />\n<br />\nNext yii\\db\\IntegrityException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`yii2_veterinaria`.`tbl_razas`, CONSTRAINT `tbl_razas_ibfk_1` FOREIGN KEY (`id_especie`) REFERENCES `tbl_especies` (`id_especie`))<br />\nThe SQL being executed was: DELETE FROM `tbl_especies` WHERE `id_especie`=2 in C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Schema.php:676<br />\nStack trace:<br />\n#0 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php(1307): yii\\db\\Schema-&gt;convertException(Object(PDOException), &#039;DELETE FROM `tb...&#039;)<br />\n#1 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\Command.php(1102): yii\\db\\Command-&gt;internalExecute(&#039;DELETE FROM `tb...&#039;)<br />\n#2 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(405): yii\\db\\Command-&gt;execute()<br />\n#3 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(765): yii\\db\\ActiveRecord::deleteAll(Array)<br />\n#4 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\db\\ActiveRecord.php(724): yii\\db\\ActiveRecord-&gt;deleteInternal()<br />\n#5 C:\\laragon\\www\\veterinaria\\modules\\pacientes\\controllers\\EspeciesController.php(142): yii\\db\\ActiveRecord-&gt;delete()<br />\n#6 [internal function]: app\\modules\\pacientes\\controllers\\EspeciesController-&gt;actionDelete(&#039;2&#039;)<br />\n#7 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\InlineAction.php(57): call_user_func_array(Array, Array)<br />\n#8 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Controller.php(178): yii\\base\\InlineAction-&gt;runWithParams(Array)<br />\n#9 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Module.php(552): yii\\base\\Controller-&gt;runAction(&#039;delete&#039;, Array)<br />\n#10 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\web\\Application.php(103): yii\\base\\Module-&gt;runAction(&#039;pacientes/espec...&#039;, Array)<br />\n#11 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Application.php(384): yii\\web\\Application-&gt;handleRequest(Object(yii\\web\\Request))<br />\n#12 C:\\laragon\\www\\veterinaria\\web\\index.php(12): yii\\base\\Application-&gt;run()<br />\n#13 {main}<br />\r\nAdditional Information:<br />\r\nArray<br />\n(<br />\n    [0] =&gt; 23000<br />\n    [1] =&gt; 1451<br />\n    [2] =&gt; Cannot delete or update a parent row: a foreign key constraint fails (`yii2_veterinaria`.`tbl_razas`, CONSTRAINT `tbl_razas_ibfk_1` FOREIGN KEY (`id_especie`) REFERENCES `tbl_especies` (`id_especie`))<br />\n)<br />\n', 1, '2022-04-24 07:44:09'),
+(13, 'pacientes/create', 'yii\\base\\ErrorException: Undefined index: id_vacunas in C:\\laragon\\www\\veterinaria\\modules\\pacientes\\controllers\\PacientesController.php:103<br />\nStack trace:<br />\n#0 C:\\laragon\\www\\veterinaria\\modules\\pacientes\\controllers\\PacientesController.php(103): yii\\base\\ErrorHandler-&gt;handleError(8, &#039;Undefined index...&#039;, &#039;C:\\\\laragon\\\\www\\\\...&#039;, 103, Array)<br />\n#1 [internal function]: app\\modules\\pacientes\\controllers\\PacientesController-&gt;actionCreate()<br />\n#2 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\InlineAction.php(57): call_user_func_array(Array, Array)<br />\n#3 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Controller.php(178): yii\\base\\InlineAction-&gt;runWithParams(Array)<br />\n#4 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Module.php(552): yii\\base\\Controller-&gt;runAction(&#039;create&#039;, Array)<br />\n#5 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\web\\Application.php(103): yii\\base\\Module-&gt;runAction(&#039;pacientes/pacie...&#039;, Array)<br />\n#6 C:\\laragon\\www\\veterinaria\\vendor\\yiisoft\\yii2\\base\\Application.php(384): yii\\web\\Application-&gt;handleRequest(Object(yii\\web\\Request))<br />\n#7 C:\\laragon\\www\\veterinaria\\web\\index.php(12): yii\\base\\Application-&gt;run()<br />\n#8 {main}', 1, '2022-05-31 19:56:41');
 
 -- --------------------------------------------------------
 
@@ -239,8 +289,33 @@ CREATE TABLE `tbl_especies` (
 
 INSERT INTO `tbl_especies` (`id_especie`, `nombre`, `user_ing`, `fecha_ing`, `user_mod`, `fecha_mod`, `visible`) VALUES
 (1, 'Canina', 1, '2022-03-06 13:38:55', 1, '2022-03-06 13:38:55', 1),
-(2, 'Gatuna', 1, '2022-03-06 13:38:55', 1, '2022-03-06 13:38:55', 1),
-(3, 'Especie 3', 1, '2022-05-04 19:49:13', 1, '2022-05-04 19:49:13', 1);
+(2, 'Gatuna', 1, '2022-03-06 13:38:55', 1, '2022-03-06 13:38:55', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_inventario`
+--
+
+CREATE TABLE `tbl_inventario` (
+  `id_inventario` int(11) NOT NULL,
+  `id_compra` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `cant_original` int(11) NOT NULL,
+  `numero_ingreso` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_inventario`
+--
+
+INSERT INTO `tbl_inventario` (`id_inventario`, `id_compra`, `id_producto`, `cantidad`, `cant_original`, `numero_ingreso`) VALUES
+(1, 1, 1, 40, 40, 'INV-#####'),
+(2, 1, 2, 25, 25, 'INV-#####'),
+(3, 1, 3, 45, 45, 'INV-#####'),
+(4, 1, 4, 35, 35, 'INV-#####'),
+(5, 1, 5, 50, 50, 'INV-#####');
 
 -- --------------------------------------------------------
 
@@ -554,7 +629,85 @@ CREATE TABLE `tbl_pacientes` (
 --
 
 INSERT INTO `tbl_pacientes` (`id_paciente`, `cod_paciente`, `id_representante`, `nombre`, `imagen`, `id_especie`, `id_raza`, `sexo`, `fecha_nac`, `color`, `caracteristicas`, `alergias`, `user_ing`, `fecha_ing`, `user_mod`, `fecha_mod`, `activo`) VALUES
-(1, 'PA-0001', 1, 'Byakko Junior', '/pacientes/byakko.png', 2, 246, 'M', '2014-04-01', 'Tuxedo', 'caracteristicas del paciente', 'alergias del paciente', 1, '2022-05-08 06:58:00', 1, '2022-05-08 06:58:00', 1);
+(1, 'PA-0001', 1, 'Byakko Junior', '/pacientes/byakko.png', 2, 246, 'M', '2014-04-01', 'Tuxedo', 'caracteristicas del paciente', 'alergias del paciente', 1, '2022-05-08 06:58:00', 1, '2022-05-08 06:58:00', 1),
+(2, 'PA-0002', 3, 'Canelo', '/pacientes/sin_imagen.jpg', 1, 4, 'M', '2019-06-19', 'Cafe', '<p>ninguna<br></p>', '<p>ninguna<br></p>', 1, '2022-05-22 07:40:15', 1, '2022-05-22 07:40:15', 1),
+(3, 'PA-0003', 1, 'Nya', '/pacientes/BiNgL3ydCiHWeYFIU79phj1HzaIcTsx0.JPG', 2, 243, 'H', '2018-01-26', 'Gris', '<p>Ninguna<br></p>', '<p>Ninguna<br></p>', 1, '2022-05-22 07:42:07', 1, '2022-05-22 07:42:07', 1),
+(4, 'PA-0004', 1, 'Chatty', '/pacientes/FpdibzdnfVwHT8CQFurH4G2hCocQ2Z1A.jpg', 2, 243, 'H', '2018-07-19', 'Blanco y Gris', '<p>Ninguna non<br></p>', '<p>Ninguna<br></p>', 1, '2022-05-22 07:43:16', 1, '2022-05-22 07:43:16', 1),
+(5, 'PA-0005', 3, 'Pelusa', '/pacientes/TEVr7MYOGtC5fJ5aGi-WcPeimc2UNjOO.jpg', 2, 246, 'H', '2020-11-25', 'Naranja, blanco y negro', '<p>Ninguna<br></p>', '<p>Ninguna<br></p>', 1, '2022-05-22 07:45:01', 1, '2022-05-22 07:45:01', 1),
+(7, 'PA-0006', 1, 'Gaton', '/pacientes/aRpr35yfonSVCu64BlJTsyrWa4-088ek.jpg', 2, 243, 'M', '2000-07-26', 'Blanco y Gris', '<p>ninguna<br></p>', '<p>ninguna<br></p>', 1, '2022-05-31 19:58:37', 1, '2022-06-02 19:42:44', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_pacientes_vacunas`
+--
+
+CREATE TABLE `tbl_pacientes_vacunas` (
+  `id_paciente` int(11) NOT NULL,
+  `id_vacuna` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_pacientes_vacunas`
+--
+
+INSERT INTO `tbl_pacientes_vacunas` (`id_paciente`, `id_vacuna`) VALUES
+(7, 2),
+(7, 4),
+(7, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_productos`
+--
+
+CREATE TABLE `tbl_productos` (
+  `id_producto` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `min_stock` int(11) NOT NULL,
+  `fecha_ing` datetime NOT NULL,
+  `user_ing` int(11) NOT NULL,
+  `fecha_mod` datetime NOT NULL,
+  `user_mod` int(11) NOT NULL,
+  `estado` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_productos`
+--
+
+INSERT INTO `tbl_productos` (`id_producto`, `nombre`, `min_stock`, `fecha_ing`, `user_ing`, `fecha_mod`, `user_mod`, `estado`) VALUES
+(1, 'Producto 1', 10, '2022-05-15 14:32:27', 1, '2022-05-15 14:32:27', 1, 1),
+(2, 'Producto 2', 10, '2022-05-15 14:33:52', 1, '2022-05-15 14:33:52', 1, 1),
+(3, 'Producto 3', 10, '2022-05-15 14:33:52', 1, '2022-05-15 14:33:52', 1, 1),
+(4, 'Producto 4', 10, '2022-05-15 14:33:52', 1, '2022-05-15 14:33:52', 1, 1),
+(5, 'Producto 5', 10, '2022-05-15 14:33:52', 1, '2022-05-15 14:33:52', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_proveedores`
+--
+
+CREATE TABLE `tbl_proveedores` (
+  `id_proveedor` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `telefono` varchar(255) NOT NULL,
+  `direccion` text NOT NULL,
+  `fecha_ing` datetime NOT NULL,
+  `user_ing` int(11) NOT NULL,
+  `fecha_mod` datetime NOT NULL,
+  `user_mod` int(11) NOT NULL,
+  `estado` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_proveedores`
+--
+
+INSERT INTO `tbl_proveedores` (`id_proveedor`, `nombre`, `telefono`, `direccion`, `fecha_ing`, `user_ing`, `fecha_mod`, `user_mod`, `estado`) VALUES
+(1, 'Diana SA de CV', '7896-8888', 'Direccion de la empresa', '2022-05-15 14:31:37', 1, '2022-05-15 14:31:37', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -951,6 +1104,29 @@ INSERT INTO `tbl_usuarios` (`id_usuario`, `username`, `nombre`, `apellido`, `aut
 (1, 'james', 'Jaime', 'Guevara', 'tEuYL0epr10-PDJDdZ3dAmQs9nCU2gfl', '$2y$13$Hkpi4vzKpl.0cT1P7T.wVOJZRMBjvR6PHkJYrBmn/pO6z7d7wnPyi', NULL, 'admin@admin.com', '/avatars/dBC4_WA9QZx9sk7sYn3f8vrVcvQpqV-k.gif', 1, 1646012409, 1646012409, NULL),
 (2, 'test', 'Test', 'test', 'YKKwSFAZSkRBp21O-nYSLvfh8-36Uu8Z', '$2y$13$Tdx5beo/phev7v4CLad.i.AYH7zKOZ.DUQDKtrGRc5lqHjFWOyroW', NULL, 'test@test.com', '/avatars/default.png', 1, 1646012577, 1646012577, NULL);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_vacunas`
+--
+
+CREATE TABLE `tbl_vacunas` (
+  `id_vacuna` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_vacunas`
+--
+
+INSERT INTO `tbl_vacunas` (`id_vacuna`, `nombre`) VALUES
+(1, 'Vacuna 1'),
+(2, 'Vacuna 2'),
+(3, 'Vacuna 3'),
+(4, 'Vacuna 4'),
+(5, 'Vacuna 5'),
+(6, 'Vacuna 6');
+
 --
 -- Indexes for dumped tables
 --
@@ -990,10 +1166,27 @@ ALTER TABLE `migration`
   ADD PRIMARY KEY (`version`);
 
 --
+-- Indexes for table `tbl_compras`
+--
+ALTER TABLE `tbl_compras`
+  ADD PRIMARY KEY (`id_compra`),
+  ADD KEY `id_proveedor` (`id_proveedor`),
+  ADD KEY `user_ing` (`user_ing`),
+  ADD KEY `user_mod` (`user_mod`);
+
+--
 -- Indexes for table `tbl_departamentos`
 --
 ALTER TABLE `tbl_departamentos`
   ADD PRIMARY KEY (`id_departamento`);
+
+--
+-- Indexes for table `tbl_det_compras`
+--
+ALTER TABLE `tbl_det_compras`
+  ADD PRIMARY KEY (`id_det_compra`),
+  ADD KEY `id_compra` (`id_compra`),
+  ADD KEY `id_producto` (`id_producto`);
 
 --
 -- Indexes for table `tbl_error_log`
@@ -1009,6 +1202,14 @@ ALTER TABLE `tbl_especies`
   ADD PRIMARY KEY (`id_especie`),
   ADD KEY `user_ing` (`user_ing`),
   ADD KEY `user_mod` (`user_mod`);
+
+--
+-- Indexes for table `tbl_inventario`
+--
+ALTER TABLE `tbl_inventario`
+  ADD PRIMARY KEY (`id_inventario`),
+  ADD KEY `id_compra` (`id_compra`),
+  ADD KEY `id_producto` (`id_producto`);
 
 --
 -- Indexes for table `tbl_municipios`
@@ -1027,6 +1228,29 @@ ALTER TABLE `tbl_pacientes`
   ADD KEY `id_representante` (`id_representante`),
   ADD KEY `id_especie` (`id_especie`),
   ADD KEY `id_raza` (`id_raza`),
+  ADD KEY `user_ing` (`user_ing`),
+  ADD KEY `user_mod` (`user_mod`);
+
+--
+-- Indexes for table `tbl_pacientes_vacunas`
+--
+ALTER TABLE `tbl_pacientes_vacunas`
+  ADD KEY `id_paciente` (`id_paciente`),
+  ADD KEY `id_vacuna` (`id_vacuna`);
+
+--
+-- Indexes for table `tbl_productos`
+--
+ALTER TABLE `tbl_productos`
+  ADD PRIMARY KEY (`id_producto`),
+  ADD KEY `user_ing` (`user_ing`),
+  ADD KEY `user_mod` (`user_mod`);
+
+--
+-- Indexes for table `tbl_proveedores`
+--
+ALTER TABLE `tbl_proveedores`
+  ADD PRIMARY KEY (`id_proveedor`),
   ADD KEY `user_ing` (`user_ing`),
   ADD KEY `user_mod` (`user_mod`);
 
@@ -1059,8 +1283,20 @@ ALTER TABLE `tbl_usuarios`
   ADD UNIQUE KEY `password_reset_token` (`password_reset_token`);
 
 --
+-- Indexes for table `tbl_vacunas`
+--
+ALTER TABLE `tbl_vacunas`
+  ADD PRIMARY KEY (`id_vacuna`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `tbl_compras`
+--
+ALTER TABLE `tbl_compras`
+  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_departamentos`
@@ -1069,16 +1305,28 @@ ALTER TABLE `tbl_departamentos`
   MODIFY `id_departamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
+-- AUTO_INCREMENT for table `tbl_det_compras`
+--
+ALTER TABLE `tbl_det_compras`
+  MODIFY `id_det_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `tbl_error_log`
 --
 ALTER TABLE `tbl_error_log`
-  MODIFY `id_error_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_error_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tbl_especies`
 --
 ALTER TABLE `tbl_especies`
-  MODIFY `id_especie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_especie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tbl_inventario`
+--
+ALTER TABLE `tbl_inventario`
+  MODIFY `id_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_municipios`
@@ -1090,7 +1338,19 @@ ALTER TABLE `tbl_municipios`
 -- AUTO_INCREMENT for table `tbl_pacientes`
 --
 ALTER TABLE `tbl_pacientes`
-  MODIFY `id_paciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_paciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `tbl_productos`
+--
+ALTER TABLE `tbl_productos`
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tbl_proveedores`
+--
+ALTER TABLE `tbl_proveedores`
+  MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_razas`
@@ -1109,6 +1369,12 @@ ALTER TABLE `tbl_representantes`
 --
 ALTER TABLE `tbl_usuarios`
   MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tbl_vacunas`
+--
+ALTER TABLE `tbl_vacunas`
+  MODIFY `id_vacuna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -1134,6 +1400,21 @@ ALTER TABLE `auth_item_child`
   ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `tbl_compras`
+--
+ALTER TABLE `tbl_compras`
+  ADD CONSTRAINT `tbl_compras_ibfk_1` FOREIGN KEY (`id_proveedor`) REFERENCES `tbl_proveedores` (`id_proveedor`),
+  ADD CONSTRAINT `tbl_compras_ibfk_2` FOREIGN KEY (`user_ing`) REFERENCES `tbl_usuarios` (`id_usuario`),
+  ADD CONSTRAINT `tbl_compras_ibfk_3` FOREIGN KEY (`user_mod`) REFERENCES `tbl_usuarios` (`id_usuario`);
+
+--
+-- Constraints for table `tbl_det_compras`
+--
+ALTER TABLE `tbl_det_compras`
+  ADD CONSTRAINT `tbl_det_compras_ibfk_1` FOREIGN KEY (`id_compra`) REFERENCES `tbl_compras` (`id_compra`),
+  ADD CONSTRAINT `tbl_det_compras_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `tbl_productos` (`id_producto`);
+
+--
 -- Constraints for table `tbl_error_log`
 --
 ALTER TABLE `tbl_error_log`
@@ -1145,6 +1426,13 @@ ALTER TABLE `tbl_error_log`
 ALTER TABLE `tbl_especies`
   ADD CONSTRAINT `tbl_especies_ibfk_1` FOREIGN KEY (`user_ing`) REFERENCES `tbl_usuarios` (`id_usuario`),
   ADD CONSTRAINT `tbl_especies_ibfk_2` FOREIGN KEY (`user_mod`) REFERENCES `tbl_usuarios` (`id_usuario`);
+
+--
+-- Constraints for table `tbl_inventario`
+--
+ALTER TABLE `tbl_inventario`
+  ADD CONSTRAINT `tbl_inventario_ibfk_1` FOREIGN KEY (`id_compra`) REFERENCES `tbl_compras` (`id_compra`),
+  ADD CONSTRAINT `tbl_inventario_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `tbl_productos` (`id_producto`);
 
 --
 -- Constraints for table `tbl_municipios`
@@ -1161,6 +1449,27 @@ ALTER TABLE `tbl_pacientes`
   ADD CONSTRAINT `tbl_pacientes_ibfk_3` FOREIGN KEY (`id_representante`) REFERENCES `tbl_representantes` (`id_representante`),
   ADD CONSTRAINT `tbl_pacientes_ibfk_4` FOREIGN KEY (`user_ing`) REFERENCES `tbl_usuarios` (`id_usuario`),
   ADD CONSTRAINT `tbl_pacientes_ibfk_5` FOREIGN KEY (`user_mod`) REFERENCES `tbl_usuarios` (`id_usuario`);
+
+--
+-- Constraints for table `tbl_pacientes_vacunas`
+--
+ALTER TABLE `tbl_pacientes_vacunas`
+  ADD CONSTRAINT `tbl_pacientes_vacunas_ibfk_1` FOREIGN KEY (`id_paciente`) REFERENCES `tbl_pacientes` (`id_paciente`),
+  ADD CONSTRAINT `tbl_pacientes_vacunas_ibfk_2` FOREIGN KEY (`id_vacuna`) REFERENCES `tbl_vacunas` (`id_vacuna`);
+
+--
+-- Constraints for table `tbl_productos`
+--
+ALTER TABLE `tbl_productos`
+  ADD CONSTRAINT `tbl_productos_ibfk_1` FOREIGN KEY (`user_ing`) REFERENCES `tbl_usuarios` (`id_usuario`),
+  ADD CONSTRAINT `tbl_productos_ibfk_2` FOREIGN KEY (`user_mod`) REFERENCES `tbl_usuarios` (`id_usuario`);
+
+--
+-- Constraints for table `tbl_proveedores`
+--
+ALTER TABLE `tbl_proveedores`
+  ADD CONSTRAINT `tbl_proveedores_ibfk_1` FOREIGN KEY (`user_ing`) REFERENCES `tbl_usuarios` (`id_usuario`),
+  ADD CONSTRAINT `tbl_proveedores_ibfk_2` FOREIGN KEY (`user_mod`) REFERENCES `tbl_usuarios` (`id_usuario`);
 
 --
 -- Constraints for table `tbl_razas`
