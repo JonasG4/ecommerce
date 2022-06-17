@@ -1,0 +1,18 @@
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - WebDriver:
+            url: http://localhost:8080/
+            browser: firefox
+        - Yii2:
+            part: orm
+            entryScript: index-test.php
+            cleanup: false
+extensions:
+    enabled:
+        - Codeception\Extension\RunProcess:
+            0: selenium-standalone start
+            1: php tests/bin/yii serve
+            sleep: 1
+step_decorators:
+    - \Codeception\Step\TryTo

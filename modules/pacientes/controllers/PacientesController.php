@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @link https://jrguevara.github.io.net
+ * @copyright Copyright (c) 2022 jrCoding
+ * @license https://www.yiiframework.com/license/
+ */
+
 namespace app\modules\pacientes\controllers;
 
 use app\controllers\CoreController;
@@ -18,12 +24,14 @@ use yii\helpers\Json;
 use yii\web\UploadedFile;
 
 /**
- * PacientesController implements the CRUD actions for TblPacientes model.
+ * PacientesController implementa las operaciones CRUD para el modelo TblPacientes.
+ * @author Jaime Guevara <jr.guevara@outlook.com>
+ * @since 0.1
  */
 class PacientesController extends Controller
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
@@ -41,9 +49,8 @@ class PacientesController extends Controller
     }
 
     /**
-     * Lists all TblPacientes models.
-     *
-     * @return string
+     * Lista todos los paciente en el modelo TblPacientes.
+     * @return string que renderiza vista index
      */
     public function actionIndex()
     {
@@ -57,10 +64,10 @@ class PacientesController extends Controller
     }
 
     /**
-     * Displays a single TblPacientes model.
+     * Despliega el registro de un solo modelo en TblPacientes.
      * @param int $id_paciente Id Paciente
      * @return string
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException si el modelo no se encuentra
      */
     public function actionView($id_paciente)
     {
@@ -72,6 +79,12 @@ class PacientesController extends Controller
         ]);
     }
 
+    /**
+     * Crea una nueva instancia del modelo TblRepresentantes.
+     * Si la creacion es exitosa, el navegador redirige a la pagina de vista
+     * Se utiliza try y catch para implementar Transacciones con Commit y Rollback
+     * @return string|\yii\web\Response
+     */
     public function actionCreate()
     {
         $model = new TblPacientes();
@@ -131,6 +144,10 @@ class PacientesController extends Controller
         }
     }
 
+    /**
+     * Genera Codigo para ser utilizado en registro de TblRepresentantes actionCreate
+     * @return string
+     */
     function CreateCode()
     {
         $paciente = TblPacientes::find()->orderBy(['id_paciente' => SORT_DESC])->one();
@@ -159,11 +176,11 @@ class PacientesController extends Controller
     }
 
     /**
-     * Updates an existing TblPacientes model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * Actualiza un modelo existente de TblPacientes
+     * Si la actualizacion es exitosa, el navegador redirige a la pagina de vista
      * @param int $id_paciente Id Paciente
      * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException si el modelo no se encuentra
      */
     public function actionUpdate($id_paciente)
     {
@@ -212,11 +229,11 @@ class PacientesController extends Controller
     }
 
     /**
-     * Deletes an existing TblPacientes model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * Elimina un solo registro existente del modelo TblPacientes.
+     * Si se elimina correctamente, el navegador redirige a la pagina de index
      * @param int $id_paciente Id Paciente
      * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException si el modelo no se encuentra
      */
     public function actionDelete($id_paciente)
     {
@@ -226,11 +243,11 @@ class PacientesController extends Controller
     }
 
     /**
-     * Finds the TblPacientes model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
+     * Encuentra el registro en modelo TblPacientes basado en la llave primaria
+     * Si el modelo no se encuentra, una exception de tipo 404 sera lanzada
      * @param int $id_paciente Id Paciente
-     * @return TblPacientes the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @return TblPacientes el modelo que se cargo
+     * @throws NotFoundHttpException si el modelo no se encuentra
      */
     protected function findModel($id_paciente)
     {
@@ -241,6 +258,10 @@ class PacientesController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    /**
+     * Funcion DepDrop para mostrar Listas despegables sincronizadas
+     * @return \yii\helpers\Json con la informacion para llenar la lista desplegable correspondiente
+     */
     public function actionRazas()
     {
         $out = [];

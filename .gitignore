@@ -2,7 +2,8 @@
 ###################
 commands/
 /mail
-/tests
+#/tests
+/documentation
 /vagrant
 /vendor
 composer.lock

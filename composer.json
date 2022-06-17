@@ -25,7 +25,8 @@
         "kartik-v/yii2-widgets": "@dev",
         "yii2mod/yii2-rbac": "*",
         "kartik-v/yii2-editors": "dev-master",
-        "kartik-v/yii2-editable": "dev-master"
+        "kartik-v/yii2-editable": "dev-master",
+        "yiisoft/yii2-apidoc": "^3.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -37,7 +38,8 @@
         "symfony/browser-kit": ">=2.7 <=4.2.4",
         "codeception/module-filesystem": "^1.0.0",
         "codeception/module-yii2": "^1.0.0",
-        "codeception/module-asserts": "^1.0.0"
+        "codeception/module-asserts": "^1.0.0",
+        "codeception/module-webdriver": "^2.0"
     },
     "config": {
         "process-timeout": 1800,

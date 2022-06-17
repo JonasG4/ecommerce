@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @link https://jrguevara.github.io.net
+ * @copyright Copyright (c) 2022 jrCoding
+ * @license https://www.yiiframework.com/license/
+ */
+
 namespace app\models;
 
 use Yii;
@@ -30,6 +36,12 @@ use Yii;
  * @property TblRepresentantes $representante
  * @property TblUsuarios $userIng
  * @property TblUsuarios $userMod
+ */
+
+/**
+ * TblPacientes implementa las operaciones logicas para la tabla tbl_pacientes.
+ * @author Jaime Guevara <jr.guevara@outlook.com>
+ * @since 0.1
  */
 class TblPacientes extends \yii\db\ActiveRecord
 {
@@ -64,7 +76,12 @@ class TblPacientes extends \yii\db\ActiveRecord
         ];
     }
 
-    //? Getter para recuperar data de un solo paciente
+    /**
+     * Getter para recuperar data de un solo paciente
+     * @param int $id_paciente captura id de paciente
+     * @return object $paciente con la informacion del paciente
+     * @throws Exception not yet implemented
+     */
     public static function getPaciente($id_paciente)
     {
         $paciente = TblPacientes::find()->where(['id_paciente' => $id_paciente])->one();
@@ -99,7 +116,7 @@ class TblPacientes extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Especie]].
+     * Consulta para [[TblEspecies]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -109,7 +126,7 @@ class TblPacientes extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Raza]].
+     * Consulta para [[TblRazas]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -119,7 +136,7 @@ class TblPacientes extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Representante]].
+     * Consulta para [[TblRepresentantes]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -129,7 +146,7 @@ class TblPacientes extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[TblPacientesVacunas]].
+     * Consulta para [[TblPacientesVacunas]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -139,7 +156,7 @@ class TblPacientes extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[UserIng]].
+     * Consulta para [[TblUsuarios]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -149,7 +166,7 @@ class TblPacientes extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[UserMod]].
+     * Consulta para [[TblUsuarios]].
      *
      * @return \yii\db\ActiveQuery
      */
