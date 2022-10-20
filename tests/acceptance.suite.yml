@@ -2,12 +2,14 @@ class_name: AcceptanceTester
 modules:
     enabled:
         - WebDriver:
-            url: http://localhost:8080/
-            browser: firefox
+            url: http://localhost:80/
+            browser: opera
         - Yii2:
             part: orm
             entryScript: index-test.php
             cleanup: false
+            transaction: false # don't wrap test in transaction
+
 extensions:
     enabled:
         - Codeception\Extension\RunProcess:

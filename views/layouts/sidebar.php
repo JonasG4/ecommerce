@@ -113,7 +113,7 @@ use yii\helpers\Url;
                 <!------- FIN MENU PACIENTES ------->
 
                 <!------- MENU INVENTARIO ------->
-                <?php if (Yii::$app->controller->id == 'compras' || Yii::$app->controller->id == 'inventario' || Yii::$app->controller->id == 'productos' || Yii::$app->controller->id == 'proveedores') {
+                <?php if (Yii::$app->controller->id == 'categorias' || Yii::$app->controller->id == 'inventario' || Yii::$app->controller->id == 'productos') {
                     $li = "nav-item has-treeview active menu-open";
                     $a = "nav-link active";
                 } else {
@@ -125,7 +125,7 @@ use yii\helpers\Url;
                     </a>
                     <ul class="nav nav-treeview">
                         <!-------------------------------------------------->
-                        <?php if (Yii::$app->controller->id == 'proveedores' && in_array(\Yii::$app->controller->action->id, ['index', 'create', 'update'])) {
+                        <?php if (Yii::$app->controller->id == 'categorias' && in_array(\Yii::$app->controller->action->id, ['index', 'create', 'update'])) {
                             $li = "nav-item active";
                             $a = "nav-link active";
                         } else {
@@ -133,8 +133,8 @@ use yii\helpers\Url;
                             $a = "nav-link";
                         }
                         ?>
-                        <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/inventario/proveedores/index']); ?>"><i class="nav-icon far fa-circle text-red"></i>
-                                <p>Proveedores</p>
+                        <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/inventario/categorias/index']); ?>"><i class="nav-icon far fa-circle text-red"></i>
+                                <p>Categorias</p>
                             </a></li>
                         <!-------------------------------------------------->
                         <?php if (Yii::$app->controller->id == 'productos' && in_array(\Yii::$app->controller->action->id, ['index', 'create', 'update'])) {
@@ -149,18 +149,6 @@ use yii\helpers\Url;
                                 <p>Productos</p>
                             </a></li>
                         <!-------------------------------------------------->
-                        <?php if (Yii::$app->controller->id == 'compras' && in_array(\Yii::$app->controller->action->id, ['index', 'create', 'update'])) {
-                            $li = "nav-item active";
-                            $a = "nav-link active";
-                        } else {
-                            $li = "nav-item";
-                            $a = "nav-link";
-                        }
-                        ?>
-                        <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/inventario/compras/index']); ?>"><i class="nav-icon far fa-circle text-green"></i>
-                                <p>Compras</p>
-                            </a></li>
-                        <!-------------------------------------------------->
                         <?php if (Yii::$app->controller->id == 'inventario' && in_array(\Yii::$app->controller->action->id, ['index', 'create', 'update'])) {
                             $li = "nav-item active";
                             $a = "nav-link active";
@@ -173,6 +161,7 @@ use yii\helpers\Url;
                                 <p>Inventario</p>
                             </a></li>
                         <!-------------------------------------------------->
+                       
                     </ul>
                 </li>
                 <!------- FIN MENU INVENTARIO ------->

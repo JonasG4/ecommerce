@@ -8,4 +8,9 @@ modules:
     enabled:
       - Asserts
       - Yii2:
-            part: [orm, email, fixtures]
+            configFile: 'config/test.php'
+            part: orm # allow to use AR methods
+            transaction: false # don't wrap test in transaction
+            cleanup: false # don't cleanup the fixtures
+            entryScript: index-test.php
+            

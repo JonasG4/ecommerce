@@ -18,7 +18,7 @@ use yii\helpers\Url;
             <div class="card-header">
                 <h3 class="card-title">Crear / Editar registro</h3>
             </div>
-            <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]); ?>
+            <?php $form = ActiveForm::begin(['id' => 'form-representante']); ?>
             <div class="card-body">
                 <form role="form">
                     <div class="row">
@@ -46,6 +46,7 @@ use yii\helpers\Url;
                             <?= Html::activeLabel($model, 'correo_electronico', ['class' => 'control-label']) ?>
                             <?= $form->field($model, 'correo_electronico', ['showLabels' => false])->textInput(['maxlength' => true]) ?>
                         </div>
+
                         <div class="col-md-6">
                             <?= Html::activeLabel($model, 'id_departamento', ['class' => 'control-label']) ?>
                             <?= $form->field($model, 'id_departamento', ['showLabels' => false])->widget(Select2::class, [
@@ -55,6 +56,8 @@ use yii\helpers\Url;
                                 'pluginOptions' => ['allowClear' => true],
                             ]); ?>
                         </div>
+
+
                         <div class="col-md-6">
                             <?= Html::hiddenInput('model_id1', $model->isNewRecord ? '' : $model->id_departamento, ['id' => 'model_id1']); ?>
                             <?= Html::activeLabel($model, 'id_municipio', ['class' => 'control-label']) ?>
@@ -71,23 +74,16 @@ use yii\helpers\Url;
                                 ]
                             ]); ?>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <?= Html::activeLabel($model, 'activo', ['class' => 'control-label']) ?>
-                            <?= $form->field($model, 'activo', ['showLabels' => false])->label('visible')->widget(SwitchInput::class, [
-                                'value' => $model->activo, //checked status can change by db value
-                                'options' => ['uncheck' => 0, 'value' => 1], //value if not set ,default is 1
-                                'pluginOptions' => [
-                                    'handleWidth' => 60,
-                                    'onColor' => 'success',
-                                    'offColor' => 'danger',
-                                    'onText' => 'Activo',
-                                    'offText' => 'Inactivo'
-                                ]
-                            ]); ?>
+                            <?= $form->field($model, 'activo', ['showLabels' => false])->label('visible')->radioList(
+                                [0 => 'Inactivo', 1 => 'Activo'],
+                                ['custom' => true, 'inline' => true, 'id' => 'custom-radio-list-inline']
+                            ); ?>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <?= Html::submitButton($model->isNewRecord ? '<i class="fa fa-save"></i> Guardar' : '<i class="fa fa-save"></i> Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        <?= Html::submitButton($model->isNewRecord ? '<i class="fa fa-save"></i> Guardar' : '<i class="fa fa-save"></i> Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'name' => 'submit-button']) ?>
                         <?= Html::a('<i class="fa fa-ban"></i> Cancelar', ['index'], ['class' => 'btn btn-danger']) ?>
                     </div>
                 </form>
