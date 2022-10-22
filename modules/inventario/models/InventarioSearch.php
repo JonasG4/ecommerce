@@ -17,8 +17,7 @@ class InventarioSearch extends TblInventario
     public function rules()
     {
         return [
-            [['id_inventario', 'id_compra', 'id_producto', 'cantidad', 'cant_original'], 'integer'],
-            [['numero_ingreso'], 'safe'],
+            [['id', 'id_producto', 'cantidad'], 'integer'],
         ];
     }
 
@@ -58,14 +57,10 @@ class InventarioSearch extends TblInventario
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id_inventario' => $this->id_inventario,
-            'id_compra' => $this->id_compra,
+            'id' => $this->id,
             'id_producto' => $this->id_producto,
             'cantidad' => $this->cantidad,
-            'cant_original' => $this->cant_original,
         ]);
-
-        $query->andFilterWhere(['like', 'numero_ingreso', $this->numero_ingreso]);
 
         return $dataProvider;
     }

@@ -1,13 +1,14 @@
 <?php
 
+use app\models\TblInventario;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
-/* @var $this yii\web\View */
-/* @var $searchModel app\modules\inventario\models\InventarioSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/** @var yii\web\View $this */
+/** @var app\modules\inventario\models\InventarioSearch $searchModel */
+/** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Tbl Inventarios';
 $this->params['breadcrumbs'][] = $this->title;
@@ -28,16 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_inventario',
-            'id_compra',
+            'id',
             'id_producto',
             'cantidad',
-            'cant_original',
-            //'numero_ingreso',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, TblInventario $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id_inventario' => $model->id_inventario]);
+                    return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
         ],

@@ -2,8 +2,8 @@
 
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\TblInventario */
+/** @var yii\web\View $this */
+/** @var app\models\TblInventario $model */
 
 $this->title = 'Create Tbl Inventario';
 $this->params['breadcrumbs'][] = ['label' => 'Tbl Inventarios', 'url' => ['index']];
