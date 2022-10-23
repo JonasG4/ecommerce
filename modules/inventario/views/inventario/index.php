@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'vAlign' => 'middle',
                     'format' => 'html',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::a($model->producto->nombre,  ['productos/view', 'id_producto' => $model->producto->id_producto]);
+                        return Html::a($model->productos->nombre,  ['productos/view', 'id_producto' => $model->productos->id_producto]);
                     },
                     'filterType' => GridView::FILTER_SELECT2,
                     'filter' => ArrayHelper::map(TblProductos::find()->orderBy('nombre')->all(), 'id_producto', 'nombre'),

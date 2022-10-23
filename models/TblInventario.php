@@ -42,7 +42,7 @@ class TblInventario extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_producto' => 'Id Producto',
+            'id_producto' => 'Producto',
             'cantidad' => 'Cantidad',
         ];
     }
