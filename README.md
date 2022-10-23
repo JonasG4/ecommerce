@@ -3,26 +3,6 @@
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
     </a>
 </p>
-<p align="center">
-    <a href="https://univo.edu.sv" target="_blank">
-        <img src="https://www.univo.edu.sv/wp-content/uploads/2019/09/lo2.png">
-    </a>
-</p>    
-    <h1 align="center">Yii 2 Veterinaria UNIVO</h1>
-   <br>
-
-Proyecto creado en Yii2 con fines educativos para estudiantes de la materia Aplicacion de Frameworks Empresariales. Ciclo 02-2022 de la Universidad de Oriente UNIVO
-
-Yii 2 Basic Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-rapidly creating small projects.
-
-The template contains the basic features including user login/logout and a contact page.
-It includes all commonly used configurations that would allow you to focus on adding new
-features to your application.
-
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-basic.svg)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-basic.svg)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![build](https://github.com/yiisoft/yii2-app-basic/workflows/build/badge.svg)](https://github.com/yiisoft/yii2-app-basic/actions?query=workflow%3Abuild)
 
 ## DIRECTORY STRUCTURE
 
