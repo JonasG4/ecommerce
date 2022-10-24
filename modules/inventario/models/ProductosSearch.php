@@ -17,9 +17,8 @@ class ProductosSearch extends TblProductos
     public function rules()
     {
         return [
-            [['id_producto', 'id_categoria', 'id_imagenes', 'min_stock', 'user_ing', 'user_mod', 'estado'], 'integer'],
-            [['nombre', 'descripcion', 'fecha_ing', 'fecha_mod'], 'safe'],
-            [['precio'], 'number'],
+            [['id_producto', 'id_categoria', 'min_stock', 'user_ing', 'user_mod', 'estado'], 'integer'],
+            [['nombre', 'descripcion', 'fecha_ing', 'fecha_mod', 'precio'], 'safe'],
         ];
     }
 
@@ -62,7 +61,6 @@ class ProductosSearch extends TblProductos
             'id_producto' => $this->id_producto,
             'id_categoria' => $this->id_categoria,
             'precio' => $this->precio,
-            'id_imagenes' => $this->id_imagenes,
             'min_stock' => $this->min_stock,
             'fecha_ing' => $this->fecha_ing,
             'user_ing' => $this->user_ing,

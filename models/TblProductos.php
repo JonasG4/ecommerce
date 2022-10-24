@@ -37,12 +37,14 @@ class TblProductos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'min_stock', 'fecha_ing', 'user_ing', 'fecha_mod', 'user_mod', 'estado'], 'required'],
-            [['min_stock', 'user_ing', 'user_mod', 'estado'], 'integer'],
+            [['id_categoria', 'nombre', 'precio', 'descripcion', 'min_stock', 'fecha_ing', 'user_ing', 'fecha_mod', 'user_mod', 'estado'], 'required'],
+            [['id_categoria', 'min_stock', 'user_ing', 'user_mod', 'estado'], 'integer'],
+            [['precio'], 'safe'],
             [['fecha_ing', 'fecha_mod'], 'safe'],
-            [['nombre'], 'string', 'max' => 255],
-            [['user_ing'], 'exist', 'skipOnError' => true, 'targetClass' => TblUsuarios::className(), 'targetAttribute' => ['user_ing' => 'id_usuario']],
-            [['user_mod'], 'exist', 'skipOnError' => true, 'targetClass' => TblUsuarios::className(), 'targetAttribute' => ['user_mod' => 'id_usuario']],
+            [['nombre', 'descripcion'], 'string', 'max' => 255],
+            [['id_categoria'], 'exist', 'skipOnError' => true, 'targetClass' => TblCategorias::class, 'targetAttribute' => ['id_categoria' => 'id_categoria']],
+            [['user_ing'], 'exist', 'skipOnError' => true, 'skipOnError' => true, 'targetClass' => TblUsuarios::class, 'targetAttribute' => ['user_ing' => 'id_usuario']],
+            [['user_mod'], 'exist', 'skipOnError' => true, 'skipOnError' => true, 'targetClass' => TblUsuarios::class, 'targetAttribute' => ['user_mod' => 'id_usuario']],
         ];
     }
 
@@ -52,9 +54,10 @@ class TblProductos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_producto' => 'Id Producto',
+            'id_producto' => 'Id',
+            'id_categoria' => 'Categoria',
             'nombre' => 'Nombre',
-            'min_stock' => 'Min Stock',
+            'min_stock' => 'Stock',
             'fecha_ing' => 'Fecha Ing',
             'user_ing' => 'User Ing',
             'fecha_mod' => 'Fecha Mod',
@@ -68,9 +71,9 @@ class TblProductos extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTblDetCompras()
+    public function getCategoria()
     {
-        return $this->hasMany(TblDetCompras::className(), ['id_producto' => 'id_producto']);
+        return $this->hasOne(TblCategorias::class, ['id_categoria' => 'id_categoria']);
     }
 
     /**
@@ -78,9 +81,9 @@ class TblProductos extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTblInventarios()
+    public function getProductoImagen()
     {
-        return $this->hasMany(TblInventario::className(), ['id_producto' => 'id_producto']);
+        return $this->hasMany(TblProductoImagenes::class, ['id_producto' => 'id_producto']);
     }
 
     /**
@@ -90,7 +93,7 @@ class TblProductos extends \yii\db\ActiveRecord
      */
     public function getUserIng()
     {
-        return $this->hasOne(TblUsuarios::className(), ['id_usuario' => 'user_ing']);
+        return $this->hasOne(TblUsuarios::class, ['id_usuario' => 'user_ing']);
     }
 
     /**
@@ -100,6 +103,6 @@ class TblProductos extends \yii\db\ActiveRecord
      */
     public function getUserMod()
     {
-        return $this->hasOne(TblUsuarios::className(), ['id_usuario' => 'user_mod']);
+        return $this->hasOne(TblUsuarios::class, ['id_usuario' => 'user_mod']);
     }
 }

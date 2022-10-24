@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\TblProductos */
 
-$this->title = 'Create Tbl Productos';
-$this->params['breadcrumbs'][] = ['label' => 'Tbl Productos', 'url' => ['index']];
+$this->title = 'Crear registro';
+$this->params['breadcrumbs'][] = ['label' => 'Listado', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tbl-productos-create">
@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'modelImagen' => $modelImagen
     ]) ?>
 
 </div>

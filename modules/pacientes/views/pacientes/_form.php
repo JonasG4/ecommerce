@@ -40,13 +40,15 @@ use yii\helpers\Url;
                             <?= $form->field($model, 'nombre', ['showLabels' => false])->textInput(['maxlength' => true]) ?>
                         </div>
                         <div class="col-md-12">
-                            <?= Html::activeLabel($model, 'imagen', ['class' => 'control-label']) ?>
+                        
+                        <?= Html::activeLabel($model, 'imagen', ['class' => 'control-label']) ?>
                             <?= $form->field($model, 'imagen', ['showLabels' => false])->widget(
                                 FileInput::class,
                                 ['options' => ['accept' => 'image/*'],]
                             ); ?>
                             <?= $form->field($model, 'imagen', ['showLabels' => false])->hiddenInput(['maxlength' => true]) ?>
                         </div>
+
                         <div class="col-md-6">
                             <?= Html::activeLabel($model, 'id_especie', ['class' => 'control-label']) ?>
                             <?= $form->field($model, 'id_especie', ['showLabels' => false])->widget(Select2::class, [

@@ -4,5 +4,5 @@
         <b>Version</b> v1.18.10.20
     </div>
     <!-- Default to the left -->
-    <strong>Hecho con <i class="far fa-heart text-red"> </i> por <a href="http://jrcoding.net" target="_blank">jrCoding</a> - Copyright &copy; <?php echo date('Y'); ?>. </strong>
+    <strong>Laboratorio #2 - Equipo #3 - Copyright &copy; <?php echo date('Y'); ?>. </strong>
 </footer>
